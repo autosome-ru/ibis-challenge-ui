@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {fromUsers} from "../action";
+import {fromUser} from "../action";
 import {map} from "rxjs";
-import {SocialAuthService} from "../../services/social-auth.service";
+import {GithubAuthService} from "../../services/github-auth.service";
 import {HttpClient} from "@angular/common/http";
 
 
@@ -11,7 +11,7 @@ export class UserEffects {
 
   authSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(fromUsers.LoadAuthSuccess),
+      ofType(fromUser.LoadAuthSuccess),
       map((x) => {
         this.authService.storeBearerToken(x.auth.token);
         this.authService.fetchUserProfile()
@@ -19,7 +19,7 @@ export class UserEffects {
       })
     ), {dispatch: false})
 
-  constructor(private actions$: Actions, private authService: SocialAuthService, private http: HttpClient) {
+  constructor(private actions$: Actions, private authService: GithubAuthService, private http: HttpClient) {
   }
 
 }

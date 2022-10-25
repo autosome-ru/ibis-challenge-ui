@@ -1,0 +1,68 @@
+@use "../theming";
+@use "../sizes";
+@use "../typography";
+
+// List
+.ibis-list { //ul
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: map-get(sizes.$sizes_primary, "xs");
+}
+
+.ibis-list__title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.ibis-list span.mat-badge-content { //ul
+  position: absolute;
+  top: calc(-0.4 * map-get(sizes.$sizes_primary, "xs")) !important;
+  left: calc(-0.4 * map-get(sizes.$sizes_primary, "xs")) !important;
+}
+
+// Item
+.ibis-list-item { //li
+  padding: map-get(sizes.$sizes_half, "sm");
+  border-radius: map-get(sizes.$sizes_primary, "xs");
+  height: auto; //map-get(sizes.$sizes_double, "xs");
+
+  background-color: map-get(theming.$background_theme, "light");
+  list-style: none;
+}
+
+
+.ibis-list-item__status {
+  position: absolute;
+  right: map-get(sizes.$sizes_half, "xs");
+  top: map-get(sizes.$sizes_half, "xs");
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.ibis-list-item__header {
+  display: flex;
+  margin-bottom: map-get(sizes.$sizes_half, "sm");
+}
+
+.ibis-list-item__content {
+  @include text_secondary;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: map-get(sizes.$sizes_half, "xs");
+}
+
+.ibis-list-item__footer {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row-reverse;
+  align-items: center;
+
+  height: map-get(sizes.$sizes_half, "sm");
+}

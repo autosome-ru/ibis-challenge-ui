@@ -18,6 +18,8 @@ import {ActivatedRoute} from "@angular/router";
   "}"]
 
 })
+
+//<button (click)="onWindowClose()"></button>
 export class CallbackComponent implements OnInit {
 
   constructor(
@@ -31,6 +33,10 @@ export class CallbackComponent implements OnInit {
     sessionStorage.setItem("code", this.route.snapshot.queryParams['code'])
     //setTimeout(() => window.close(), 5000)
     console.log("This")
+    window.close()
+  }
+
+  onWindowClose() {
     window.close()
   }
 

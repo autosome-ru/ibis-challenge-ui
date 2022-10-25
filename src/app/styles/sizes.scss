@@ -1,0 +1,18 @@
+$sizes_primary: ("xs": 24px, "sm": 32px, "md": 56px, "lg": 96px, "xl": 128px);
+$sizes_double: ("xs": 48px, "sm": 64px, "md": 112px, "lg": 192px, "xl": 256px);
+$sizes_half: ("xs": 12px, "sm": 16px, "md": 28px, "lg": 48px, "xl": 64px);
+
+
+@each $key in map-keys($sizes_primary) {
+  .border-radius-#{$key} {
+    border-radius: map-get($sizes_primary, $key) !important;
+  }
+}
+
+@each $key in map-keys($sizes_half) {
+  .border-radius-#{$key}-half {
+    border-radius: map-get($sizes_half, $key) !important;
+  }
+}
+
+

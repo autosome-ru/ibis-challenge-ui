@@ -1,0 +1,17 @@
+@use 'src/app/styles/theming';
+@use 'src/app/styles/sizes';
+
+.container.top {
+  margin-top: map-get(sizes.$sizes_primary, "lg");
+}
+
+.page-center {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 30px;
+}

@@ -1,3 +1,13 @@
+@use 'theming';
+
+.pre, code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+}
+
 /*!
   Theme: StackOverflow Light
   Description: Light theme as used on stackoverflow.com
@@ -35,7 +45,7 @@
 .hljs-doctag,
 .hljs-section {
   /* var(--highlight-keyword) */
-  color: #015692;
+  color: map-get(theming.$first_theme, "primary");
 }
 
 .hljs-attr {
@@ -48,6 +58,7 @@
   color: #803378;
 }
 
+.hljs-built_in,
 .hljs-name,
 .hljs-type,
 .hljs-number,
@@ -55,7 +66,8 @@
 .hljs-quote,
 .hljs-template-tag {
   /* var(--highlight-namespace) */
-  color: #b75501;
+  color: map-get(theming.$first_theme, "primary");
+  font-weight:400;
 }
 
 .hljs-selector-class {
@@ -72,6 +84,7 @@
 .hljs-selector-attr {
   /* var(--highlight-variable) */
   color: #54790d;
+  font-weight: 400;
 }
 
 .hljs-meta,
@@ -80,11 +93,10 @@
   color: #015692;
 }
 
-.hljs-built_in,
 .hljs-title,
 .hljs-literal {
   /* var(--highlight-literal) */
-  color: #b75501;
+  color: map-get(theming.$third_theme, "dark");
 }
 
 .hljs-bullet,

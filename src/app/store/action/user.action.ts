@@ -1,7 +1,7 @@
 import {createAction, props} from "@ngrx/store";
 import {AuthModel, UserProfileModel} from "../../models/user.model";
 
-export namespace fromUsers {
+export namespace fromUser {
   export const ClearUser = createAction('[User] Clear User')
 
   export const LoadProfile = createAction('[User] Load Profile')

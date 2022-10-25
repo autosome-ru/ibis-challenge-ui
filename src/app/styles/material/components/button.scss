@@ -1,0 +1,46 @@
+@use 'src/app/styles/theming';
+@use 'src/app/styles/sizes';
+
+button.round {
+  border-radius: 256px;
+}
+
+button.lg {
+  height: map-get(sizes.$sizes_primary, "md");
+  line-height: map-get(sizes.$sizes_primary, "md");
+  padding: 0 map-get(sizes.$sizes_half, "md");
+
+}
+
+button.blue-text {
+  color: map-get(theming.$first_theme, "dark");
+}
+
+button.lg-text {
+  font-size: 20px;
+}
+
+button.gradient {
+  background: linear-gradient(90deg, map-get(theming.$third_theme, "dark") 0%, map-get(theming.$second_theme, "light") 100%);
+  color: map-get(theming.$background_theme, "primary");
+  font-weight: 600;
+}
+
+button.sm {
+  $parent: &;
+  height: map-get(sizes.$sizes_primary, "sm");
+  line-height: map-get(sizes.$sizes_primary, "sm");
+  padding: 0 map-get(sizes.$sizes_half, "sm");
+
+  mat-icon {
+    font-size: 20px !important;
+    height: 20px !important;
+    width: 20px !important;
+  }
+}
+
+button.sm-text {
+  font-size: 15px;
+}
+
+

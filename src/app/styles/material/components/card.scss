@@ -1,0 +1,6 @@
+@use "../../theming";
+
+mat-card {
+  box-shadow: none !important;
+  border: 1px solid map-get(theming.$border_theme, "primary")
+}

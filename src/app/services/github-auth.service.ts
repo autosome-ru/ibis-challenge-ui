@@ -1,14 +1,18 @@
 import {Injectable, NgZone} from '@angular/core';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Router} from "@angular/router";
+import {filter, mergeMap, Observable} from "rxjs";
+import {select, Store} from "@ngrx/store";
 import {convertParamsToUrl} from "../helpers/helpers-functions";
 import {CookiesService} from "./cookies.service";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AppState, fromUser, userAuthSelector} from "../store";
-import {select, Store} from "@ngrx/store";
 import {AuthModel, UserProfileModel} from "../models/user.model";
-import {mergeMap, Observable} from "rxjs";
-import {Router} from "@angular/router";
 import {apiAuthProfileUrl, apiAuthUrl} from "../helpers/constants/urls";
 import {githubAuthorizeUrl, githubClientId, githubRedirectUrl} from "../helpers/constants/github.info";
+import {
+  convertAuthBackendToAuthModel,
+  convertUserProfileBackendToUserProfileModel
+} from "../helpers/converters/user-converter";
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +22,10 @@ export class GithubAuthService {
   tokenFieldName: string = "token";
 
 
-  userAuthStore$: Observable<AuthModel | null> = this.store.pipe(select(userAuthSelector))
+  userAuthStore$: Observable<AuthModel | null> = this.store.pipe(select(userAuthSelector)).pipe(
+    filter(value => value !== undefined),
+    filter(value => value !== null)
+  )
 
   constructor(private readonly http: HttpClient,
               private readonly ngZone: NgZone,
@@ -41,8 +48,8 @@ export class GithubAuthService {
     this.http.post<AuthModel>(apiAuthUrl,
       {'code': code},
       {headers: this.headers}).subscribe({
-      next: (token) => {
-        this.store.dispatch(fromUser.LoadAuthSuccess({auth: token}))
+      next: (tokenBackend) => {
+        this.store.dispatch(fromUser.LoadAuthSuccess({auth: convertAuthBackendToAuthModel(tokenBackend)}))
       },
       error: (error) => {
         this.store.dispatch(fromUser.LoadAuthFailure({error: error.message}))
@@ -98,16 +105,31 @@ export class GithubAuthService {
               .set('Content-Type', 'application/json; charset=utf-8')
           }))
     ).subscribe({
-      next: (profile) => {
-        this.store.dispatch(fromUser.LoadProfileSuccess({user: profile}))
+      next: (profileBackend) => {
+        this.store.dispatch(fromUser.LoadProfileSuccess({user: convertUserProfileBackendToUserProfileModel(profileBackend)}));
       },
       error: (error) => {
-        this.store.dispatch(fromUser.LoadProfileFailure({error: error.message}))
+        this.store.dispatch(fromUser.LoadProfileFailure({error: error.message}));
+        console.warn(error);
+        this.checkBackendError(error);
       }
     })
   }
 
+  checkBackendError(error: any) {
+    if (error.status == 410 && error.message == "token expired") {
+      this.logoutGithubAndForgetToken();
+    }
+  }
+
   logoutGithub(): void {
+    console.log("logoutGithub")
+    this.store.dispatch(fromUser.ClearUser());
+    this.router.navigate(['']);
+  }
+
+  logoutGithubAndForgetToken(): void {
+    console.log("logoutGithubAndForgetToken")
     this.cookiesService.removeElement(this.tokenFieldName);
     this.store.dispatch(fromUser.ClearUser());
     this.router.navigate(['']);

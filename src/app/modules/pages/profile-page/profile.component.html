@@ -17,7 +17,8 @@
           Sign out
           <mat-icon>logout</mat-icon>
         </button>
-        <button (click)="onAddNewTeamPressed()" *ngIf="!(addingNewTeam || !team)" class="round sm sm-text blue-text"
+        <button (click)="onAddFirstTeamMemberPressed()" *ngIf="teamDoesNotExist()"
+                class="round sm sm-text blue-text"
                 mat-button>
           Add new team
           <mat-icon>add</mat-icon>
@@ -26,7 +27,7 @@
     </ibis-card>
   </div>
 
-  <div *ngIf="addingNewTeam" class="row">
+  <div *ngIf="!teamDoesNotExist()" class="row">
     <ibis-card *ngIf="team" class="col">
       <ibis-card-title>Team
         <mat-icon>groups</mat-icon>
@@ -42,7 +43,7 @@
 
 
         <div *ngIf="!teamEditing">
-          <h5>{{team.name}}</h5>
+          <h4>{{team.name}}</h4>
           <span class="text_secondary">{{team.email}}</span>
         </div>
 
@@ -54,16 +55,29 @@
           </span>
         </h5>
 
+        <ibis-list *ngIf="teamEditing">
+          <ibis-list-item [index]="this.team.members[0].member_idx + 1">
+            <div class="ibis-list-item__status">
+              Spokesman
+              <mat-icon>person</mat-icon>
+            </div>
+            <form [formGroup]="memberForms[this.team.members[0].member_idx]">
+              <ibis-form-question *ngFor="let memberQuestion of memberQuestions[this.team.members[0].member_idx]"
+                                  [form]="memberForms[this.team.members[0].member_idx]"
+                                  [question]="memberQuestion"></ibis-form-question>
+            </form>
+          </ibis-list-item>
+        </ibis-list>
         <ibis-list (cdkDropListDropped)="userDropped($event)"
-                   *ngIf="teamEditing"
+                   *ngIf="teamEditing && membersExist()"
                    [cdkDropListData]="team.members"
                    cdkDropList
                    class="drop-area">
-          <ibis-list-item *ngFor="let member of team.members"
+          <ibis-list-item *ngFor="let member of team.members.slice(1)"
                           [index]="member.member_idx + 1"
                           cdkDrag>
             <div class="ibis-list-item__status">
-              {{member.member_idx == 0 ? "Spokesman" : "Member"}}
+              Member
               <mat-icon>person</mat-icon>
             </div>
             <form [formGroup]="memberForms[member.member_idx]">
@@ -73,7 +87,6 @@
             </form>
             <div class="ibis-list-item__footer">
               <button (click)="onRemoveMemberButtonPressed(member.member_idx)"
-                      *ngIf="member.member_idx != 0"
                       class="round sm sm-text blue-text"
                       color="warn"
                       mat-button
@@ -104,9 +117,6 @@
             </span>
           </ibis-list-item>
         </ibis-list>
-
-        <!--        <ibis-user-list *ngIf="!teamEditing" [userList]="team.members" title="Members"></ibis-user-list>-->
-        <!--        <ibis-user-list-editing *ngIf="teamEditing" [userList]="team.members" title="Members"></ibis-user-list-editing>-->
       </ibis-card-content>
 
       <ibis-card-footer>

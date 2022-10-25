@@ -1,1 +1,56 @@
-/* You can add global styles to this file, and also import other style files */
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+/* Importing own Material styles */
+@import 'app/styles/material/theming';
+@import 'app/styles/material/typography';
+@import 'app/styles/material/styling';
+/* Importing own Material component styles */
+@import 'app/styles/material/components/button';
+@import 'app/styles/material/components/spinner';
+@import 'app/styles/material/components/card';
+@import 'app/styles/material/components/form-field';
+/* Importing project styles */
+@import 'src/app/styles/theming';
+@import 'src/app/styles/typography';
+@import 'src/app/styles/animations';
+@import 'src/app/styles/sizes';
+@import 'src/app/styles/code';
+@import 'src/app/styles/drag-n-drop';
+/* Importing shared styles */
+@import 'src/app/styles/shared/ibis-list';
+
+
+html, body {
+  overflow-x: hidden
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0
+}
+
+.flex-spacer {
+  flex: 1 1 auto;
+}
+
+.page-content .container {
+  margin-top: map-get($sizes_primary, "md");
+  margin-bottom: map-get($sizes_primary, "md");
+}
+
+.page-content .row {
+  margin-bottom: map-get($sizes_primary, "sm");
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+
+
+
+

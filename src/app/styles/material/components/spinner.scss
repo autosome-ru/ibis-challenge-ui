@@ -1,0 +1,35 @@
+mat-spinner.mat-spinner_small {
+  height: 32px !important;
+  width: 32px !important;
+
+  svg {
+    height: 32px !important;
+    width: 32px !important;
+  }
+}
+
+mat-spinner.mat-spinner_medium {
+  height: 56px !important;
+  width: 56px !important;
+
+  svg {
+    height: 56px !important;
+    width: 56px !important;
+  }
+}
+
+mat-spinner.mat-spinner_inline-block {
+  display: inline-block;
+}
+
+
+.page-center {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 30px;
+}

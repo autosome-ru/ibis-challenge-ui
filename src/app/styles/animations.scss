@@ -1,0 +1,82 @@
+@keyframes _slideInFromTop {
+  from {
+    transform: translateY(-100vh);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes _slideInFromBottom {
+  from {
+    transform: translateY(100vh);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes _slideInFromLeft {
+  from {
+    transform: translateX(-100vw);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes _slideInFromRight {
+  from {
+    transform: translateX(100vw);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes _startFromOpaque {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@mixin animation_params {
+  animation: 0.75s ease 0s 1;
+}
+
+.paused {
+  animation-play-state: paused!important;
+}
+.running {
+  animation-play-state: running!important;
+}
+
+.slideInFromTop {
+  @include animation_params;
+  animation-name: _slideInFromTop;
+}
+
+.slideInFromBottom {
+  @include animation_params;
+  animation-name: _slideInFromBottom;
+}
+
+.slideInFromLeft {
+  @include animation_params;
+  animation-name: _slideInFromLeft;
+}
+
+.slideInFromRight {
+  @include animation_params;
+  animation-name: _slideInFromRight;
+}
+
+.startFromOpaque {
+  @include animation_params;
+  animation-name: _startFromOpaque;
+}
+
+

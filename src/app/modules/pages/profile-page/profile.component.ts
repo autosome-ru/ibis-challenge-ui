@@ -20,15 +20,19 @@ import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 })
 export class ProfileComponent implements OnInit, OnDestroy {
 
-  public User$ = this.store.pipe(select(userProfileSelector));
-  public Team$ = this.store.pipe(select(teamProfileSelector));
+  public User$ = this.store.pipe(select(userProfileSelector),
+    filter(x => x !== undefined),
+    filter(x => x !== null));
+  public Team$ = this.store.pipe(select(teamProfileSelector),
+    filter(x => x !== undefined),
+    filter(x => x !== null));
   public addingNewTeam: boolean = false;
-  public teamEditing: boolean = true;
+  public teamEditing: boolean = false;
   public teamQuestions: QuestionBase<string>[] = [];
   public memberQuestions: QuestionBase<string>[][] = [];
   public teamForm!: FormGroup;
   public user!: UserProfileModel | null;
-  public team!: TeamProfileModel | null;
+  public team!: TeamProfileModel;
   public memberForms: FormGroup[] = [];
   public membersMax: number = 10;
   private TeamSubscription!: Subscription;
@@ -58,9 +62,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     label: "Member's city",
     required: true,
     pattern: {pattern: "[a-zA-Z. ]*", errorMsg: "latin letters, spaces and dots"},
-    order: 2,
+    order: 4,
     placeholder: 'Paris'
   }];
+  private offset: number = 1;
 
   constructor(private readonly store: Store<AppState>,
               private readonly authService: GithubAuthService,
@@ -70,27 +75,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.teamService.loadTeams();
     this.TeamSubscription = this.User$.pipe(
       tap(x => this.user = x as UserProfileModel),
-      filter(x => x !== undefined),
-      filter(x => x !== null),
-      mergeMap(() => this.Team$.pipe(
-          filter(x => x !== undefined),
-          filter(x => x !== null)
-        )
+      mergeMap(() => this.Team$
       )).subscribe(team => {
-
-      // this.team = {
-      //   name: "Awesome Team",
-      //   email: "example@gmail.com",
-      //   members: [{
-      //     name: "Alexander S. Pushkin",
-      //     affiliation: "Institute of Awesome Technology",
-      //     city: "Paris",
-      //     country: "France",
-      //     member_idx: 0
-      //   }]
-      // }
-
-      console.log(team);
+      this.team = {name: "", email: "", members: []}
+      this.memberForms = [];
 
       this.teamQuestions = this.questionService.getQuestions([{
         key: 'teamName',
@@ -111,45 +99,23 @@ export class ProfileComponent implements OnInit, OnDestroy {
         value: team!.email
       }]);
 
-      this.team = {...team!};
-      if (!this.team.members) {
-        this.team.members = [{name: this.user!.name, affiliation: "", country: "", city: "", member_idx: 0}]
-      }
-
-      // this.team = {
-      //   name: "Awesome Team",
-      //   email: "example@gmail.com",
-      //   members: [{
-      //     name: "Alexander S. Pushkin",
-      //     affiliation: "Institute of Awesome Technology",
-      //     city: "Paris",
-      //     country: "France",
-      //     member_idx: 0
-      //   }]
-      // }
-
+      // this.team = {...team!};
+      // this.team.members = Array.from([...team!.members], (x) => {
+      //   return {...x}
+      // });
+      // this.team = team!;
+      this.team = JSON.parse(JSON.stringify(team));
 
 
       this.teamForm = this.qcs.toFormGroup(this.teamQuestions);
 
-
-
       for (let i = 0; i < this.team.members.length; i++) {
-        let currentMemberQuestions = [
-          {
-            ...this.memberQuestionsTemplate[0],
-            value: this.team.members[i].name
-          }, {
-            ...this.memberQuestionsTemplate[1],
-            value: this.team.members[i].affiliation
-          }, {
-            ...this.memberQuestionsTemplate[2],
-            value: this.team.members[i].country
-          }, {
-            ...this.memberQuestionsTemplate[3],
-            value: this.team.members[i].city
-          },
-        ]
+        let currentMemberQuestions = this.getMemberQuestions(
+          this.team.members[i].name,
+          this.team.members[i].affiliation,
+          this.team.members[i].country,
+          this.team.members[i].city
+        );
         this.memberQuestions[i] = this.questionService.getQuestions(currentMemberQuestions);
         this.memberForms.push(this.qcs.toFormGroup(this.memberQuestions[i]))
       }
@@ -175,16 +141,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.authService.logoutGithub()
   }
 
-  onAddNewTeamPressed() {
-    this.addingNewTeam = true;
-    this.teamEditingOn();
-  }
-
   onSaveTeamChangesPressed() {
     if (!this.isFormValid()) {
       return
     }
-    console.log({team: this.teamForm.value, members: Array.from(this.memberForms, form => form.value)})
     this.team!.name = this.teamForm.value.teamName;
     this.team!.email = this.teamForm.value.contactEmail;
     let memberValues = Array.from(this.memberForms, form => form.value);
@@ -200,23 +160,57 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
     this.toggleTeamEditing();
 
-    //this.teamService.sendTeams(this.team!);
+    this.teamService.sendTeams(this.team!);
   }
 
   onEditTeamPressed() {
     this.toggleTeamEditing();
   }
 
-  onAddNewTeamMemberPressed() {
+  getMemberQuestions(name = "", affiliation = "", country = "", city = "") {
+    return [{
+      ...this.memberQuestionsTemplate[0],
+      value: name
+    }, {
+      ...this.memberQuestionsTemplate[1],
+      value: affiliation
+    }, {
+      ...this.memberQuestionsTemplate[2],
+      value: country
+    }, {
+      ...this.memberQuestionsTemplate[3],
+      value: city
+    },]
+  }
+
+  onAddFirstTeamMemberPressed() {
     let last_idx = this.team!.members.length;
-    this.team?.members.push({
-      name: "",
+    this.team!.members.push({
+      name: this.user!.name,
       affiliation: "",
       country: "",
       city: "",
       member_idx: last_idx
     });
-    this.memberQuestions.push(this.questionService.getQuestions(this.memberQuestionsTemplate));
+    let currentMemberQuestions = this.getMemberQuestions(this.user!.name);
+    this.memberQuestions.push(this.questionService.getQuestions(currentMemberQuestions));
+    this.memberForms.push(this.qcs.toFormGroup(this.memberQuestions[last_idx]))
+    this.teamEditingOn();
+    console.log(this.team!.members, this.memberForms)
+  }
+
+  onAddNewTeamMemberPressed(name = "", affiliation = "", country = "", city = "") {
+    console.log(this.team!.members);
+    let last_idx = this.team!.members.length;
+    this.team!.members.push({
+      name: name,
+      affiliation: affiliation,
+      country: country,
+      city: city,
+      member_idx: last_idx
+    });
+    let currentMemberQuestions = this.getMemberQuestions(name, affiliation, country, city);
+    this.memberQuestions.push(this.questionService.getQuestions(currentMemberQuestions));
     this.memberForms.push(this.qcs.toFormGroup(this.memberQuestions[last_idx]))
 
   }
@@ -226,19 +220,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   userDropped(event: CdkDragDrop<TeamMemberModel[]>) {
-    console.log("userDropped")
     moveItemInArray(
       this.team!.members,
-      event.previousIndex,
-      event.currentIndex
+      event.previousIndex + this.offset,
+      event.currentIndex + this.offset
     )
     moveItemInArray(
       this.memberForms,
-      event.previousIndex,
-      event.currentIndex
+      event.previousIndex + this.offset,
+      event.currentIndex + this.offset
     )
-    this.team!.members[event.previousIndex].member_idx = event.previousIndex;
-    this.team!.members[event.currentIndex].member_idx = event.currentIndex;
+    this.team!.members[event.previousIndex + this.offset].member_idx = event.previousIndex + this.offset;
+    this.team!.members[event.currentIndex + this.offset].member_idx = event.currentIndex + this.offset;
   }
 
   isFormValid() {
@@ -247,10 +240,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   onRemoveMemberButtonPressed(memberIdx: number) {
     if (memberIdx == 0) return;
+    this.memberQuestions.splice(memberIdx, 1);
     this.memberForms.splice(memberIdx, 1);
     this.team!.members.splice(memberIdx, 1);
     for (let i = 0; i < this.team!.members.length; i++) {
       this.team!.members[i].member_idx = i;
     }
+  }
+
+  teamDoesNotExist() {
+    return !(!!this.team && !!this.team!.members && this.team!.members.length > 0);
+  }
+
+  membersExist() {
+    return (!!this.team && !!this.team!.members && this.team!.members.length > 1)
   }
 }
