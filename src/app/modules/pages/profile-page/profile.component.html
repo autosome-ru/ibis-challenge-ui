@@ -1,0 +1,151 @@
+<div class="container">
+  <div class="row">
+    <ibis-card *ngIf="user" class="col"> <!--col-xl-6-->
+      <ibis-card-title>Profile<img alt="Github logo" src="assets/github/github.svg"></ibis-card-title>
+      <ibis-card-content class="profile-card__content">
+        <img [src]="(User$ | async)?.avatar_url" alt="Profile avatar"
+             class="profile-card__avatar border-radius-sm-half">
+        <div class="profile-card__info">
+          <h5>{{(User$ | async)?.login}}</h5>
+          {{(User$ | async)?.name}}
+          <div class="flex-spacer"></div>
+          <span class="text_secondary">Joined IBIS Competition since {{(User$ | async)?.joined_since | date}}</span>
+        </div>
+      </ibis-card-content>
+      <ibis-card-footer>
+        <button (click)="onSignOutPressed()" class="round sm sm-text blue-text" mat-button>
+          Sign out
+          <mat-icon>logout</mat-icon>
+        </button>
+        <button (click)="onAddNewTeamPressed()" *ngIf="!(addingNewTeam || !team)" class="round sm sm-text blue-text"
+                mat-button>
+          Add new team
+          <mat-icon>add</mat-icon>
+        </button>
+      </ibis-card-footer>
+    </ibis-card>
+  </div>
+
+  <div *ngIf="addingNewTeam" class="row">
+    <ibis-card *ngIf="team" class="col">
+      <ibis-card-title>Team
+        <mat-icon>groups</mat-icon>
+      </ibis-card-title>
+      <ibis-card-content [style.--flex-direction]="'column'" cdkDropListGroup class="team-card__content">
+
+
+        <!--        <ibis-dynamic-form [questions]="teamQuestions$ | async"></ibis-dynamic-form>-->
+        <form *ngIf="teamEditing" [formGroup]="teamForm" class="team-card__info">
+          <ibis-form-question *ngFor="let teamQuestion of teamQuestions" [form]="teamForm"
+                              [question]="teamQuestion"></ibis-form-question>
+        </form>
+
+
+        <div *ngIf="!teamEditing">
+          <h5>{{team.name}}</h5>
+          <span class="text_secondary">{{team.email}}</span>
+        </div>
+
+        <h5 class="team-card__subheader">
+          Members
+          <span *ngIf="teamEditing"
+                class="position-absolute">
+            {{team.members.length}}/{{membersMax}}
+          </span>
+        </h5>
+
+        <ibis-list (cdkDropListDropped)="userDropped($event)"
+                   *ngIf="teamEditing"
+                   [cdkDropListData]="team.members"
+                   cdkDropList
+                   class="drop-area">
+          <ibis-list-item *ngFor="let member of team.members"
+                          [index]="member.member_idx + 1"
+                          cdkDrag>
+            <div class="ibis-list-item__status">
+              {{member.member_idx == 0 ? "Spokesman" : "Member"}}
+              <mat-icon>person</mat-icon>
+            </div>
+            <form [formGroup]="memberForms[member.member_idx]">
+              <ibis-form-question *ngFor="let memberQuestion of memberQuestions[member.member_idx]"
+                                  [form]="memberForms[member.member_idx]"
+                                  [question]="memberQuestion"></ibis-form-question>
+            </form>
+            <div class="ibis-list-item__footer">
+              <button (click)="onRemoveMemberButtonPressed(member.member_idx)"
+                      *ngIf="member.member_idx != 0"
+                      class="round sm sm-text blue-text"
+                      color="warn"
+                      mat-button
+                      type="submit">
+                Remove
+                <mat-icon>
+                  delete
+                </mat-icon>
+              </button>
+            </div>
+          </ibis-list-item>
+        </ibis-list>
+
+        <ibis-list *ngIf="!teamEditing">
+          <ibis-list-item *ngFor="let member of team.members"
+                          [index]="member.member_idx + 1">
+            <span class="ibis-list-item__status">
+              {{member.member_idx == 0 ? "Spokesman" : "Member"}}
+              <mat-icon>person</mat-icon>
+            </span>
+            <span class="ibis-list-item__header">
+              <span>{{member.name}}</span>
+            </span>
+            <span class="ibis-list-item__content">
+              <span>{{member.affiliation}}</span>
+              <span>{{member.country}}</span>
+              <span>{{member.city}}</span>
+            </span>
+          </ibis-list-item>
+        </ibis-list>
+
+        <!--        <ibis-user-list *ngIf="!teamEditing" [userList]="team.members" title="Members"></ibis-user-list>-->
+        <!--        <ibis-user-list-editing *ngIf="teamEditing" [userList]="team.members" title="Members"></ibis-user-list-editing>-->
+      </ibis-card-content>
+
+      <ibis-card-footer>
+        <button (click)="onEditTeamPressed()"
+                *ngIf="!teamEditing"
+                class="round sm sm-text blue-text"
+                mat-button>
+          Edit
+          <mat-icon>
+            edit
+          </mat-icon>
+        </button>
+
+        <button (click)="onSaveTeamChangesPressed()"
+                *ngIf="teamEditing"
+                [disabled]="!isFormValid()"
+                class="round sm sm-text blue-text"
+                mat-button
+                type="submit">
+          Save changes
+          <mat-icon>
+            save
+          </mat-icon>
+        </button>
+
+        <button (click)="onAddNewTeamMemberPressed()"
+                *ngIf="teamEditing && (team.members.length < membersMax)"
+                class="round sm sm-text blue-text"
+                mat-button>
+          Add member
+          <mat-icon>
+            person_add
+          </mat-icon>
+        </button>
+      </ibis-card-footer>
+    </ibis-card>
+  </div>
+</div>
+
+
+<mat-progress-bar *ngIf="false" mode="indeterminate"></mat-progress-bar>
+

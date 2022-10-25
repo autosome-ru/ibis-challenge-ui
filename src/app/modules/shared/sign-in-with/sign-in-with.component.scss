@@ -1,0 +1,23 @@
+@use '../../../styles/theming' as theming;
+
+$container-height: 96px;
+$content-max-height: 56px;
+$content-min-height: 32px;
+
+.signin {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: ($content-max-height - $content-min-height) / 2;
+}
+
+.signin__avatar {
+  height: $content-min-height;
+  width: $content-min-height;
+  border-radius: $content-min-height / 2;
+  border: 1px solid map-get(theming.$border_theme, "light");
+}
+
+.signin_right {
+  padding-right: ($content-max-height - $content-min-height) / 2!important;
+}
+

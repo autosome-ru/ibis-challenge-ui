@@ -1,0 +1,23 @@
+<div [formGroup]="form">
+
+  <div [ngSwitch]="question.controlType">
+
+    <mat-form-field appearance="standard">
+      <mat-label [attr.for]="question.key">{{question.label}}</mat-label>
+      <input *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key"
+             [placeholder]="question.placeholder" [type]="question.type" matInput type="text">
+      <mat-error *ngIf="!isValid">
+        <span *ngIf="requiredError">{{question.label}} is <strong>required</strong></span>
+        <span *ngIf="patternError">Only <strong>{{question.pattern.errorMsg}}</strong> are allowed</span>
+        <span *ngIf="emailError">{{question.label}} must be a <strong>valid</strong> email address</span>
+      </mat-error>
+    </mat-form-field>
+
+
+
+<!--    <select *ngSwitchCase="'dropdown'" [formControlName]="question.key" [id]="question.key">-->
+<!--      <option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</option>-->
+<!--    </select>-->
+
+  </div>
+</div>

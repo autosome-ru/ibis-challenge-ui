@@ -1,0 +1,52 @@
+//https://material.angular.io/guide/theming
+
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$_one-accent: mat.define-palette(mat.$pink-palette);
+
+// Define first theme
+$_first-primary: mat.define-palette(mat.$indigo-palette, 600);
+$_first-theme: mat.define-light-theme((
+  color: (
+    primary: $_first-primary,
+    accent: $_one-accent,
+  )
+));
+
+// Define second theme
+$_second-primary: mat.define-palette(mat.$blue-palette, 600);
+$_second-theme: mat.define-dark-theme((
+  color: (
+    primary: $_second-primary,
+    accent: $_one-accent,
+  )
+));
+
+// Define third theme
+$_third-primary: mat.define-palette(mat.$purple-palette, 600);
+$_third-theme: mat.define-dark-theme((
+  color: (
+    primary: $_third-primary,
+    accent: $_one-accent,
+  )
+));
+
+// Apply indigo theme by default
+@include mat.core-theme($_first-theme);
+@include mat.all-component-themes($_first-theme);
+
+.first-theme {
+  @include mat.button-color($_first-theme);
+}
+
+// Apply the blue and purple themes only when the `.second-theme` and `.third-theme` CSS class are applied
+// to an ancestor element of the components (such as `body`).
+.second-theme {
+  @include mat.button-color($_second-theme);
+}
+
+.third-theme {
+  @include mat.button-color($_third-theme);
+}

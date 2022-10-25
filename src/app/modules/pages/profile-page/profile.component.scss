@@ -1,0 +1,28 @@
+@use "../../../styles/sizes";
+.profile-card__avatar {
+  height: map-get(sizes.$sizes_primary, "xl");
+  width: map-get(sizes.$sizes_primary, "xl");
+}
+.profile-card__info {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+
+  margin: calc(map-get(sizes.$sizes_half, "sm") / 2) 0;
+}
+.user-list__status {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.team-card__info {
+  padding-left: map-get(sizes.$sizes_half, "sm");
+}
+.team-card__subheader{
+  position: relative;
+  span {
+    position: absolute;
+    right: 0;
+  }
+}

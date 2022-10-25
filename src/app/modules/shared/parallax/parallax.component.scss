@@ -1,0 +1,63 @@
+@use 'src/app/styles/theming.scss';
+
+:host {
+  width: min-content;
+  height: min-content;
+  position: absolute;
+  left: var(--left);
+  top: var(--top);
+  right: var(--right);
+  bottom: var(--bottom);
+  z-index: -1;
+}
+$floating-value: 7px;
+@keyframes float {
+  0% {
+    transform: translateY(-$floating-value);
+  }
+  //25% {
+  //  transform: translateY(0);
+  //}
+  //50% {
+  //  transform: translateY($floating-value);
+  //}
+  //75% {
+  //  transform: translateY(0);
+  //}
+  //100% {
+  //  transform: translateY(-$floating-value);
+  //}
+  50% {
+    transform: translateY($floating-value);
+  }
+  100% {
+    transform: translateY(-$floating-value);
+  }
+}
+
+.wrapper.floating {
+  animation: 3s ease-in-out 0s infinite;
+  animation-name: float;
+}
+
+.inner {
+  transform: translateY(var(--parallax_y)) translateX(var(--parallax_x));
+}
+
+.parallax__label {
+  position: absolute;
+
+  color: map-get(theming.$first_theme, "dark");
+  font-style: italic;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  text-decoration-line: underline;
+  white-space:nowrap;
+
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.parallax__label_standingOut {
+  color: map-get(theming.$third_theme, "primary");
+}

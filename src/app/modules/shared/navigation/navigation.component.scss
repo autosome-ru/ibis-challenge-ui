@@ -1,0 +1,109 @@
+@use 'src/app/styles/theming.scss';
+
+$container-height: 96px;
+$content-max-height: 56px;
+$content-min-height: 32px;
+
+mat-drawer-container {
+  background: transparent;
+}
+
+// Sidenav
+.sidenav {
+  width: 256px;
+  display: flex;
+  height: 100vh;
+  border-right: 1px map-get(theming.$border_theme, primary) solid;
+}
+
+.sidenav__top {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+  justify-content: space-between;
+  height: $container-height;
+  padding: 0 ($container-height - $content-max-height) / 2;
+}
+
+.sidenav-content {
+  min-height: 100vh;
+  background-color: transparent;
+}
+
+//@media (min-width: 959.98px) {
+//
+//  .sidenav-content__element {
+//    padding-left: 76px;
+//  }
+//}
+
+
+
+
+
+// Toolbar
+
+mat-toolbar {
+  background-color: map-get(theming.$background_theme, "primary");
+  border-bottom: 1px map-get(theming.$border_theme, "primary") solid;
+  height: $container-height;
+  padding-left: ($container-height - $content-max-height) / 2;
+}
+
+.container {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+  gap: ($container-height - $content-max-height) / 2;
+}
+
+.menu__logo {
+  border-radius: 28px;
+  //border: solid 1px theming.$border-color; //map-get(theming.$first_theme, "primary")
+  border: 1px solid rgba(211, 211, 211, 0.5);
+}
+
+.menu__heading {
+  color: map-get(theming.$first_theme, "dark");
+  font-size: 28px;
+}
+
+.menu__button {
+  box-shadow: none;
+}
+
+mat-toolbar .menu__button {
+  position: absolute;
+  background-color: map-get(theming.$background_theme, "primary");
+  color: map-get(theming.$first_theme, "dark");
+}
+
+.menu__spacer {
+  flex: 1 1 auto;
+}
+
+.menu__item {
+  margin-left: 16px
+}
+
+.signin {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: ($content-max-height - $content-min-height) / 2;
+}
+
+.signin__avatar {
+  height: $content-min-height;
+  width: $content-min-height;
+  border-radius: $content-min-height / 2;
+}
+
+.signin_left {
+  padding-left: ($content-max-height - $content-min-height) / 2!important;
+}
+
+

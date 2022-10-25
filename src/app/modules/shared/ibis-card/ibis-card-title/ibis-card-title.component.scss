@@ -1,0 +1,23 @@
+@use "../../../../styles/sizes";
+@use "../../../../styles/theming";
+:host {
+  display: block;
+  width: 100%;
+  height: map-get(sizes.$sizes_primary, "md");
+
+  background-color: map-get(theming.$background_theme, "light");
+  border-bottom: 1px solid map-get(theming.$border_theme, "primary");
+}
+
+h4 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  line-height: map-get(sizes.$sizes_primary, "md");
+
+  padding: 0 map-get(sizes.$sizes_half, "md");
+  margin: 0;
+}

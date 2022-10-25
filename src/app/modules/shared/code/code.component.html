@@ -1,0 +1,4 @@
+
+<pre><code [highlight]="code" [languages]="['python']"></code></pre>
+<div *ngIf="isRunning" class="code__status code__status_running startFromOpaque"><mat-icon>hourglass_bottom</mat-icon> Running...</div>
+<div *ngIf="isCompleted" class="code__status code__status_completed startFromOpaque"><mat-icon>check</mat-icon> Completed</div>

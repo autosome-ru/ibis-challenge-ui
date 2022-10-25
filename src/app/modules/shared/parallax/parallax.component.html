@@ -1,0 +1,10 @@
+<div class="wrapper" [class.floating]="isFloating">
+  <div class="inner">
+    <ng-content></ng-content>
+    <div class="parallax__label"
+         *ngFor="let label of labels"
+         [class.parallax__label_standingOut]="label.standingOut"
+         [style.left.px]="label.left"
+         [style.top.px]="label.top">{{label.label}}</div>
+  </div>
+</div>

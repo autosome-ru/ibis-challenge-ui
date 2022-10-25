@@ -1,0 +1,8 @@
+@use "../../../styles/sizes";
+@use "../../../styles/theming";
+:host {
+  border-radius: map-get(sizes.$sizes_primary, "xs");
+  border: 1px solid map-get(theming.$border_theme, "primary");
+  overflow: hidden;
+  padding: 0;
+}

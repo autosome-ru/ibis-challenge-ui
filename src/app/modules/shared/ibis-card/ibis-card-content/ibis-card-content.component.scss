@@ -1,0 +1,11 @@
+@use "../../../../styles/sizes";
+@use "../../../../styles/theming";
+:host {
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(map-get(sizes.$sizes_half, "md") * var(--times));
+  flex-direction: var(--flex-direction);
+
+  padding: map-get(sizes.$sizes_half, "md");
+}

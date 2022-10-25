@@ -1,0 +1,16 @@
+.heroSection {
+  padding-top: 20vh;
+}
+
+.heroSection .heroSection__callToAction {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+  gap: 20px;
+}
+
+.mat-display-3 {
+  margin: 0;
+}

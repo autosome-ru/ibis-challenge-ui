@@ -1,0 +1,11 @@
+@use "../../../../styles/sizes";
+
+:host {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row-reverse;
+  align-items: center;
+
+  padding: 0 map-get(sizes.$sizes_half, "md");
+  height: map-get(sizes.$sizes_primary, "md");
+}

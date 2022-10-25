@@ -1,0 +1,16 @@
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
+
+<li *ngIf="index !== null"
+    [matBadge]="index"
+    class="ibis-list-item"
+    matBadgeOverlap="false"
+    matBadgePosition="before">
+  <ng-template [ngTemplateOutlet]="content"></ng-template>
+</li>
+
+<li *ngIf="index === null"
+    class="ibis-list-item">
+  <ng-template [ngTemplateOutlet]="content"></ng-template>
+</li>

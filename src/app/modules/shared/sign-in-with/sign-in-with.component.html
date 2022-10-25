@@ -1,0 +1,22 @@
+<button (click)="onSignInPressed()"
+        *ngIf="!(isLoadedUser$ | async) && !(isLoadingUser$ | async)"
+        class="menu__item round lg lg-text blue-text signin signin_right"
+        mat-button>
+  Sign in with Github
+  <img alt="Google logo" class="signin__avatar" src="assets/github/github.svg">
+</button>
+
+<button *ngIf="isLoadingUser$ | async"
+        class="menu__item round big-size lg-text blue-text signin signin_right"
+        mat-button>
+  Loading
+  <mat-spinner class="mat-spinner_small mat-spinner_inline-block"></mat-spinner>
+</button>
+
+<button *ngIf="isLoadedUser$ | async"
+        [routerLink]="'profile'"
+        class="menu__item round lg lg-text blue-text signin signin_right"
+        mat-button>
+  {{(User$ | async)?.login}}
+  <img [src]="(User$ | async)?.avatar_url" alt="User profile avatar" class="signin__avatar">
+</button>

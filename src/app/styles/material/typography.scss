@@ -1,0 +1,26 @@
+//https://material.angular.io/guide/typography
+
+@use '@angular/material' as mat;
+
+$custom-typography: mat.define-typography-config(
+  $font-family: 'Montserrat',
+  $display-1: mat.define-typography-level(56px, 1.15, 700, "Inter"), //$letter-spacing: 0
+  $display-2: mat.define-typography-level(30px, 1, 500),
+  $display-3: mat.define-typography-level(20px, 1, 500), ///$headline: mat.define-typography-level(112px, 112px, 700)
+  $headline: mat.define-typography-level(30px, 1, 700, "Inter"),
+  $title: mat.define-typography-level(25px, 1, 700, "Inter")
+);
+@include mat.core($custom-typography);
+
+.mat-display-1 {
+  margin-bottom: 24px !important;
+}
+
+.mat-display-2 {
+  margin-bottom: 12px !important;
+}
+
+.mat-display-3 {
+  margin-bottom: 6px !important;
+}
+
