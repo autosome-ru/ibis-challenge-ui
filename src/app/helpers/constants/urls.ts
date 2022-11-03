@@ -1,3 +1,7 @@
-export const apiAuthUrl: string = "http://127.0.0.1:5000/api/v1/auth";
-export const apiAuthProfileUrl: string = "http://127.0.0.1:5000/api/v1/auth/profile";
-export const apiTeamUrl: string = "http://127.0.0.1:5000/api/v1/auth/team";
+import {environment} from "../../../environments/environment";
+
+const serverUrl = environment.serverUrl;
+
+export const apiAuthUrl: string = `${serverUrl}/auth`;
+export const apiAuthProfileUrl: string = `${serverUrl}/auth/profile`;
+export const apiTeamUrl: string = `${serverUrl}/auth/team`;
