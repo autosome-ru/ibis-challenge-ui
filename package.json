@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build-aot": "ng build --aot=true"
   },
   "private": true,
   "dependencies": {
@@ -33,7 +34,6 @@
     "ngx-highlightjs": "^7.0.1",
     "rxjs": "~7.5.0",
     "scriptjs": "^2.5.9",
-    "svg-country-flags": "^1.2.10",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
