@@ -5,6 +5,11 @@ import {AuthGuard} from "./guards/auth.guard";
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'home',
     loadChildren: () => import('src/app/modules/pages/landing-page/landing.module').then(
       mod => mod.LandingModule
     )

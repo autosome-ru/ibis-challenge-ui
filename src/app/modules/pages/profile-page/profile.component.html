@@ -1,6 +1,13 @@
 <div class="container">
   <div class="row">
-    <ibis-card *ngIf="user" class="col"> <!--col-xl-6-->
+    <ng-template #loggedOut>
+      <div class="logged-out">
+        You are not logged in.
+        <competition-sign-in-with notSignedInMsg="Sign in with Github to continue"></competition-sign-in-with>
+      </div>
+    </ng-template>
+
+    <ibis-card *ngIf="user; else loggedOut" class="col"> <!--col-xl-6-->
       <ibis-card-title>Profile<img alt="Github logo" src="assets/github/github.svg"></ibis-card-title>
       <ibis-card-content class="profile-card__content">
         <img [src]="(User$ | async)?.avatar_url" alt="Profile avatar"

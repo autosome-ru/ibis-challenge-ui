@@ -1,33 +1,68 @@
-<mat-drawer-container autosize>
-  <mat-drawer #drawer class="sidenav" mode="side">
-    <div class="sidenav__top">
-      <button (click)="drawer.toggle()" *ngIf="drawer.opened" aria-label="Menu fab" class="menu__button" color="primary" mat-fab>
-        <mat-icon>menu</mat-icon>
-      </button>
-<!--      <competition-logo *ngIf="drawer.opened" [style.&#45;&#45;height]="'56px'" class="menu__logo"></competition-logo>-->
-      <img *ngIf="drawer.opened" alt="IBIS logo" class="menu__logo" src="assets/ibis-logos/IBIS_HEAD_LOGO_HEAD_56x56.png">
-    </div>
-  </mat-drawer>
+<mat-toolbar class="navigation-menu">
+  <button (click)="drawer.toggle()"
+          [class.navigation-menu__button_opened]="sidenav_opened"
+          aria-label="Menu fab"
+          class="navigation-menu__button"
+          mat-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <!--      <competition-logo *ngIf="drawer.opened" [style.&#45;&#45;height]="'56px'" class="menu__logo"></competition-logo>-->
+  <img alt="IBIS logo"
+       class="navigation-menu__logo"
+       src="../../../../assets/ibis-logos/IBIS_HEAD_LOGO_40x40.png">
+  <div [class.navigation-menu__title_opened]="true" class="navigation-menu__title">
+    <span [class.navigation-menu__title-main_opened]="true" class="navigation-menu__title-main">IBIS </span>
+    <span [class.navigation-menu__title-sub_opened]="true" class="navigation-menu__title-sub">Challenge</span>
+  </div>
+  <span class="flex-spacer"></span>
+  <competition-sign-in-with></competition-sign-in-with>
+</mat-toolbar>
 
-  <div id="buttonDiv"></div>
-  <div class="sidenav-content">
-    <mat-toolbar>
-      <button (click)="drawer.toggle()" *ngIf="!drawer.opened" aria-label="Menu fab" class="menu__button" color="primary" mat-fab>
-        <mat-icon>menu</mat-icon>
-      </button>
-      <div class="container">
-<!--        <competition-logo *ngIf="!drawer.opened && !isSmallSize" [style.&#45;&#45;height]="'56px'" class="menu__logo"></competition-logo>-->
-        <img *ngIf="!drawer.opened && !isSmallSize" alt="IBIS logo" class="menu__logo" src="assets/ibis-logos/IBIS_HEAD_LOGO_HEAD_56x56.png">
-        <span class="menu__spacer"></span>
-        <h1 class="menu__heading">IBIS Challenge</h1>
-        <span class="menu__spacer"></span>
-        <button class="menu__item round lg lg-text blue-text" mat-button>About us</button>
-        <competition-sign-in-with></competition-sign-in-with>
+<mat-drawer-container autosize>
+  <mat-drawer #drawer
+              [(opened)]="sidenav_opened"
+              class="sidebar"
+              mode="side">
+    <mat-nav-list class="sidebar-nav">
+      <div class="sidebar-nav__subheader" mat-subheader>Navigation</div>
+      <div class="sidebar-nav__list">
+        <mat-list-item *ngFor="let link of navLinks"
+                       [routerLink]="link.link"
+                       class="sidebar-nav__list-item"
+                       routerLinkActive="sidebar-nav__list-item_active">
+          <mat-icon mat-list-icon>{{link.icon}}</mat-icon>
+          <div mat-line>{{link.name}}</div>
+          <!--      <div mat-line> {{link.additional_info | date}} </div>-->
+        </mat-list-item>
       </div>
-    </mat-toolbar>
-    <div class="page-content">
+
+    </mat-nav-list>
+  </mat-drawer>
+  <div class="page-content">
+    <main class="router-container container">
       <ng-content></ng-content>
-    </div>
+    </main>
+
+    <footer class="page-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <h1 class="page-footer__title">IBIS Challenge</h1>
+            <span class="page-footer__info">
+              <span>Powered by <a href="https://autosome.org/">autosome.org</a> team</span>
+              <mat-icon>copyright</mat-icon>
+              {{currentDate | date:'YYYY'}}
+            </span>
+            <span class="page-footer__info">Version: dev.2</span>
+          </div>
+          <div class="col-12 col-md-6 page-footer__logo-wrapper">
+            <img alt="IBIS full logo"
+                 class="page-footer__logo"
+                 src="assets/ibis-logos/IBIS_FULL_LOGO.avif">
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
 </mat-drawer-container>
 

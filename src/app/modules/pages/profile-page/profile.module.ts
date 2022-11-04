@@ -15,6 +15,7 @@ import {DynamicFormModule} from "../../shared/dynamic-form/dynamic-form.module";
 import {DynamicFormQuestionModule} from "../../shared/dynamic-form-question/dynamic-form-question.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import {SignInWithModule} from "../../shared/sign-in-with/sign-in-with.module";
 
 
 @NgModule({
@@ -25,17 +26,18 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
         CommonModule,
         ProfileRoutingModule,
         MatCardModule,
-        MatButtonModule,
-        IbisCardModule,
-        MatProgressBarModule,
-        MatIconModule,
-        MatInputModule,
-        IbisListModule,
-        MatBadgeModule,
-        DynamicFormModule,
-        DynamicFormQuestionModule,
-        ReactiveFormsModule,
-        DragDropModule
+      MatButtonModule,
+      IbisCardModule,
+      MatProgressBarModule,
+      MatIconModule,
+      MatInputModule,
+      IbisListModule,
+      MatBadgeModule,
+      DynamicFormModule,
+      DynamicFormQuestionModule,
+      ReactiveFormsModule,
+      DragDropModule,
+      SignInWithModule
     ]
 })
 export class ProfileModule { }

@@ -15,13 +15,15 @@ import {environment} from '../environments/environment';
 import {EffectsModule} from '@ngrx/effects';
 import {appReducers, UserEffects} from "./store";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { LayoutBaseComponent } from './components/shared/layout-base/layout-base.component';
 
 
 // import {appReducer} from "./store/reducer";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LayoutBaseComponent
   ],
   imports: [
     BrowserModule,

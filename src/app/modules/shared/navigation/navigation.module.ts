@@ -9,6 +9,9 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatDialogModule} from "@angular/material/dialog";
 import {SignInWithModule} from "../sign-in-with/sign-in-with.module";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatRippleModule} from "@angular/material/core";
+import {MatListModule} from "@angular/material/list";
+import {RouterLink, RouterLinkActive} from "@angular/router";
 
 
 @NgModule({
@@ -18,17 +21,21 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
   exports: [
     NavigationComponent
   ],
-    imports: [
-        CommonModule,
-        MatButtonModule,
-        LogoModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatDialogModule,
-        SignInWithModule,
-        MatProgressSpinnerModule
-    ], providers: []
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    LogoModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatDialogModule,
+    SignInWithModule,
+    MatProgressSpinnerModule,
+    MatRippleModule,
+    MatListModule,
+    RouterLink,
+    RouterLinkActive
+  ], providers: []
 })
 export class NavigationModule {
 }

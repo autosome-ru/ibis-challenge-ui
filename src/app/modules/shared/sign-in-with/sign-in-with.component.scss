@@ -4,6 +4,10 @@ $container-height: 96px;
 $content-max-height: 56px;
 $content-min-height: 32px;
 
+:host {
+  padding: 0 !important;
+}
+
 .signin {
   display: flex;
   flex-flow: row nowrap;
@@ -18,6 +22,10 @@ $content-min-height: 32px;
 }
 
 .signin_right {
-  padding-right: ($content-max-height - $content-min-height) / 2!important;
+  padding-right: 0 !important;
+}
+
+.signin_left {
+  padding-left: 0 !important;
 }
 

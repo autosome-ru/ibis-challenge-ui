@@ -34,14 +34,14 @@ body {
   flex: 1 1 auto;
 }
 
-.page-content .container {
-  margin-top: map-get($sizes_primary, "md");
-  margin-bottom: map-get($sizes_primary, "md");
-}
-
-.page-content .row {
-  margin-bottom: map-get($sizes_primary, "sm");
-}
+//.page-content .container {
+//  margin-top: map-get($sizes_primary, "md");
+//  margin-bottom: map-get($sizes_primary, "md");
+//}
+//
+//.page-content .row {
+//  margin-bottom: map-get($sizes_primary, "sm");
+//}
 
 form {
   display: flex;
