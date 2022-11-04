@@ -20,17 +20,17 @@ export class LayoutBaseComponent {
   }
 
   isXLargeSize(): boolean {
-    console.log(Breakpoints.XLarge, this.breakpointObserver.isMatched([Breakpoints.XLarge]));
+    //console.log(Breakpoints.XLarge, this.breakpointObserver.isMatched([Breakpoints.XLarge]));
     return this.breakpointObserver.isMatched([Breakpoints.XLarge])
   }
 
   isLargeSize(): boolean {
-    console.log(Breakpoints.Large, this.breakpointObserver.isMatched([Breakpoints.Large]));
+    //console.log(Breakpoints.Large, this.breakpointObserver.isMatched([Breakpoints.Large]));
     return this.breakpointObserver.isMatched([Breakpoints.Large])
   }
 
   isMediumSize(): boolean {
-    console.log(Breakpoints.Medium, this.breakpointObserver.isMatched([Breakpoints.Medium]));
+    //console.log(Breakpoints.Medium, this.breakpointObserver.isMatched([Breakpoints.Medium]));
     return this.breakpointObserver.isMatched([Breakpoints.Medium])
   }
 
@@ -51,7 +51,7 @@ export class LayoutBaseComponent {
   }
 
   isWeb(): boolean {
-    console.log(Breakpoints.Web, this.breakpointObserver.isMatched([Breakpoints.Web]));
+    //console.log(Breakpoints.Web, this.breakpointObserver.isMatched([Breakpoints.Web]));
     return this.breakpointObserver.isMatched([Breakpoints.Web])
   }
 
