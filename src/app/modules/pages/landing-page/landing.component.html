@@ -1,28 +1,28 @@
-<competition-parallax *ngIf="isWeb()"
-                      [class.paused]="!isCompleted"
-                      [labels]="labels"
-                      [style.--right]="'140px'"
-                      [style.--top]="'calc(100vh - 800px)'"
-                      class="slideInFromRight"
-                      id="heroImg1">
-  <img alt="Enhanceosome image" src="assets/hero-imgs/122-Enhanceosome_enhanceosome.avif"
-       style="transform: rotateZ(233deg);">
-</competition-parallax>
+<!--<competition-parallax *ngIf="isWeb()"-->
+<!--                      [class.paused]="!isCompleted"-->
+<!--                      [labels]="labels"-->
+<!--                      [style.&#45;&#45;right]="'140px'"-->
+<!--                      [style.&#45;&#45;top]="'calc(100vh - 800px)'"-->
+<!--                      class="slideInFromRight"-->
+<!--                      id="heroImg1">-->
+<!--  <img alt="Enhanceosome image" src="assets/hero-imgs/122-Enhanceosome_enhanceosome.avif"-->
+<!--       style="transform: rotateZ(233deg);">-->
+<!--</competition-parallax>-->
 
-<competition-parallax *ngIf="isWeb()"
-                      [isFloating]="false"
-                      [isMouseMoving]="false"
-                      [style.--right]="'1vw'"
-                      [style.--top]="'calc(5vh + 56px)'"
-                      id="heroImg2"
-                      style="min-width: 350px;">
-  <competition-code (completed)="isCompleted=true"
-                    (printed)="isPrinted=true"
-                    (run)="isRun=true"
-                    [full_code]="full_code">
+<!--<competition-parallax *ngIf="isWeb()"-->
+<!--                      [isFloating]="false"-->
+<!--                      [isMouseMoving]="false"-->
+<!--                      [style.&#45;&#45;right]="'1vw'"-->
+<!--                      [style.&#45;&#45;top]="'calc(5vh + 56px)'"-->
+<!--                      id="heroImg2"-->
+<!--                      style="min-width: 350px;">-->
+<!--  <competition-code (completed)="isCompleted=true"-->
+<!--                    (printed)="isPrinted=true"-->
+<!--                    (run)="isRun=true"-->
+<!--                    [full_code]="full_code">-->
 
-  </competition-code>
-</competition-parallax>
+<!--  </competition-code>-->
+<!--</competition-parallax>-->
 
 <div class="container heroSection slideInFromLeft"> <!--[class.paused]="!isPrinted"-->
   <div class="mat-display-2">Interested in ML engeneering?</div>

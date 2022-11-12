@@ -2,7 +2,7 @@
         *ngIf="!(isLoadedUser$ | async) && !(isLoadingUser$ | async)"
         class="sign-in-with round sm sm-text blue-text signin signin_right"
         mat-button>
-  {{notSignedInMsg}}
+  {{isDisplayOfGivenSize('XSmall') ? notSignedInMsgShort : notSignedInMsg}}
   <img alt="Google logo" class="signin__avatar" src="assets/github/github.svg">
 </button>
 

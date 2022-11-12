@@ -1,27 +1,31 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 import {GithubAuthService} from "../../../services/github-auth.service";
-import {HttpHeaders} from '@angular/common/http';
 import {select, Store} from "@ngrx/store";
 import {AppState, isLoadedUserSelector, isLoadingUserSelector, userProfileSelector} from "../../../store";
 import {UserProfileModel} from "../../../models/user.model";
+import {LayoutBaseComponent} from "../../../components/shared/layout-base/layout-base.component";
+import {BreakpointObserver} from "@angular/cdk/layout";
 
 @Component({
   selector: 'competition-sign-in-with',
   templateUrl: './sign-in-with.component.html',
-  styleUrls: ['./sign-in-with.component.scss']
+  styleUrls: ['./sign-in-with.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SignInWithComponent {
-  @Input()
-  public notSignedInMsg: string = "Sign in with Github";
-  headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
-  isLoadingUser$ = this.store.pipe(select(isLoadingUserSelector));
-  isLoadedUser$ = this.store.pipe(select(isLoadedUserSelector));
-  User$ = this.store.pipe(select(userProfileSelector));
-  user!: UserProfileModel | null;
+export class SignInWithComponent extends LayoutBaseComponent {
+  //@Input()
+  //public notSignedInMsg: string = "Sign in with Github";
+  public notSignedInMsg = "Sign in with GitHub";
+  public notSignedInMsgShort = "Sign in";
 
-  constructor(private github: GithubAuthService, private store: Store<AppState>) {
+  public isLoadingUser$ = this.store.pipe(select(isLoadingUserSelector));
+  public isLoadedUser$ = this.store.pipe(select(isLoadedUserSelector));
+  public User$ = this.store.pipe(select(userProfileSelector));
+  public user!: UserProfileModel | null;
+
+  constructor(private github: GithubAuthService, private store: Store<AppState>, protected override breakpointObserver: BreakpointObserver, protected override cdr: ChangeDetectorRef) {
+    super(breakpointObserver, cdr);
   }
-
 
   onSignInPressed() {
     this.github.loginGithub()

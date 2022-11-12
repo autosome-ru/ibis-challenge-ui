@@ -1,58 +1,64 @@
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
+import {Subject, takeUntil} from "rxjs";
+
+type DisplaySize = 'XSmall' | 'Small' | 'Medium' | 'Large' | 'XLarge';
 
 @Component({
   selector: 'app-layout-base',
   template: '',
   styles: [''],
-  //changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LayoutBaseComponent {
-  public breakpointsMap = new Map([
-    [Breakpoints.XSmall, 'XSmall'],
-    [Breakpoints.Small, 'Small'],
-    [Breakpoints.Medium, 'Medium'],
-    [Breakpoints.Large, 'Large'],
-    [Breakpoints.XLarge, 'XLarge'],
+export class LayoutBaseComponent implements OnInit {
+  layoutDestroyed = new Subject<void>();
+
+
+  public breakpointsMap = new Map<DisplaySize, string>([
+    ['XSmall', Breakpoints.XSmall],
+    ['Small', Breakpoints.Small],
+    ['Medium', Breakpoints.Medium,],
+    ['Large', Breakpoints.Large,],
+    ['XLarge', Breakpoints.XLarge],
   ]);
+  public breakpointsOrder: DisplaySize[] = ['XSmall', 'Small', 'Medium', 'Large', 'XLarge']
 
-  constructor(protected breakpointObserver: BreakpointObserver) {
+  constructor(protected breakpointObserver: BreakpointObserver, protected cdr: ChangeDetectorRef) {
+
   }
 
-  isXLargeSize(): boolean {
-    //console.log(Breakpoints.XLarge, this.breakpointObserver.isMatched([Breakpoints.XLarge]));
-    return this.breakpointObserver.isMatched([Breakpoints.XLarge])
+  isDisplayOfGivenSize(size: DisplaySize): boolean {
+    return this.breakpointObserver.isMatched(this.breakpointsMap.get(size)!);
   }
 
-  isLargeSize(): boolean {
-    //console.log(Breakpoints.Large, this.breakpointObserver.isMatched([Breakpoints.Large]));
-    return this.breakpointObserver.isMatched([Breakpoints.Large])
+  isDisplayBiggerThan(size: DisplaySize): boolean {
+    let idx = this.breakpointsOrder.indexOf(size);
+    let subset = this.breakpointsOrder.slice(idx);
+    let subsetBps = subset.map(x => this.breakpointsMap.get(x)!);
+    return this.breakpointObserver.isMatched(subsetBps);
   }
 
-  isMediumSize(): boolean {
-    //console.log(Breakpoints.Medium, this.breakpointObserver.isMatched([Breakpoints.Medium]));
-    return this.breakpointObserver.isMatched([Breakpoints.Medium])
+  isDisplayLesserThan(size: DisplaySize): boolean {
+    let idx = this.breakpointsOrder.indexOf(size);
+    let subset = this.breakpointsOrder.slice(0, idx + 1);
+    let subsetBps = subset.map(x => this.breakpointsMap.get(x)!);
+    return this.breakpointObserver.isMatched(subsetBps);
   }
 
-  isSmallSize(): boolean {
-    return this.breakpointObserver.isMatched([Breakpoints.Small])
-  }
 
-  isXSmallSize(): boolean {
-    return this.breakpointObserver.isMatched([Breakpoints.XSmall])
-  }
-
-  isHandset(): boolean {
-    return this.breakpointObserver.isMatched([Breakpoints.Handset])
-  }
-
-  isTablet(): boolean {
-    return this.breakpointObserver.isMatched([Breakpoints.Tablet])
-  }
-
-  isWeb(): boolean {
-    //console.log(Breakpoints.Web, this.breakpointObserver.isMatched([Breakpoints.Web]));
-    return this.breakpointObserver.isMatched([Breakpoints.Web])
+  ngOnInit(): void {
+    this.breakpointObserver
+      .observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge,
+      ])
+      .pipe(takeUntil(this.layoutDestroyed))
+      .subscribe(_ => {
+        this.cdr.detectChanges();
+      });
   }
 
 }
