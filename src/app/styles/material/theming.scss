@@ -37,16 +37,16 @@ $_third-theme: mat.define-dark-theme((
 @include mat.core-theme($_first-theme);
 @include mat.all-component-themes($_first-theme);
 
-.first-theme {
-  @include mat.button-color($_first-theme);
-}
+//.first-theme {
+//  @include mat.button-color($_first-theme);
+//}
 
 // Apply the blue and purple themes only when the `.second-theme` and `.third-theme` CSS class are applied
 // to an ancestor element of the components (such as `body`).
-.second-theme {
-  @include mat.button-color($_second-theme);
-}
-
-.third-theme {
-  @include mat.button-color($_third-theme);
-}
+//.second-theme {
+//  @include mat.button-color($_second-theme);
+//}
+//
+//.third-theme {
+//  @include mat.button-color($_third-theme);
+//}
