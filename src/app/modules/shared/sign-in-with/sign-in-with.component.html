@@ -10,7 +10,7 @@
         class="sign-in-with round sm sm-text blue-text signin signin_right"
         mat-button>
   Loading
-  <mat-spinner class="mat-spinner_small mat-spinner_inline-block"></mat-spinner>
+  <mat-spinner [diameter]="32" class="mat-spinner_small mat-spinner_inline-block"></mat-spinner>
 </button>
 
 <button *ngIf="isLoadedUser$ | async"
