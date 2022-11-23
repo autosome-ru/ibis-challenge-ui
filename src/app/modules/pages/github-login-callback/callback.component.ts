@@ -4,7 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 @Component({
   selector: 'app-github-login-callback',
   template: '<div class="page-center">' +
-    '  <mat-spinner class="mat-spinner_medium"></mat-spinner>' +
+    '  <mat-spinner class="mat-spinner_medium" [diameter]="56"></mat-spinner>' +
     '  Loading, please wait...</div>',
   styles: [".page-center {\n" +
   "  position: absolute;\n" +
