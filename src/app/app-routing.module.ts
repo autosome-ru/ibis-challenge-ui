@@ -23,8 +23,8 @@ const routes: Routes = [
   },
   {
     path: 'callback',
-    loadChildren: () => import('src/app/modules/pages/github-login-callback/callback.module').then(
-      mod => mod.CallbackModule
+    loadChildren: () => import('src/app/modules/pages/github-login-callback-page/callback.module').then(
+        mod => mod.CallbackModule
     )
   }
 ];

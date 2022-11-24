@@ -36,6 +36,18 @@
         </mat-list-item>
       </div>
 
+      <div class="sidebar-nav__subheader" mat-subheader>Test features</div>
+      <div class="sidebar-nav__list">
+        <mat-list-item *ngFor="let link of testLinks"
+                       [routerLink]="link.link"
+                       class="sidebar-nav__list-item"
+                       routerLinkActive="sidebar-nav__list-item_active">
+          <mat-icon mat-list-icon>{{link.icon}}</mat-icon>
+          <div mat-line>{{link.name}}</div>
+          <!--      <div mat-line> {{link.additional_info | date}} </div>-->
+        </mat-list-item>
+      </div>
+
     </mat-nav-list>
   </mat-drawer>
   <div class="page-content">

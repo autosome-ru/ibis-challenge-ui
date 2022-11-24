@@ -117,7 +117,7 @@ export class GithubAuthService {
   }
 
   checkBackendError(error: any) {
-    if (error.status == 410 && error.message == "token expired") {
+    if (error.error.message == 'token expired') {
       this.logoutGithubAndForgetToken();
     }
   }

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
-  selector: 'app-github-login-callback',
+  selector: 'app-github-login-callback-page',
   template: '<div class="page-center">' +
     '  <mat-spinner class="mat-spinner_medium" [diameter]="56"></mat-spinner>' +
     '  Loading, please wait...</div>',
