@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ViewEncapsulation} from '@angular/core';
 
 @Component({
-  selector: 'competition-navigation',
+  selector: 'ibis-nav',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
   encapsulation: ViewEncapsulation.None
@@ -28,6 +28,5 @@ export class NavigationComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.navIsClosed)
   }
 }

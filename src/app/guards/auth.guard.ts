@@ -8,7 +8,7 @@ import {
   RouterStateSnapshot,
   UrlSegment
 } from '@angular/router';
-import {from, Observable, of} from 'rxjs';
+import {from, map, Observable, of} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import * as fromSelectors from "src/app/store/selector";
 import {AppState} from "../store/reducer";
@@ -38,6 +38,7 @@ export class AuthGuard implements CanLoad, CanActivate {
 
   checkAndNavigate(url: string): Observable<boolean> {
     return this.store.select(fromSelectors.userAuthSelector).pipe(
+      map(x => x.data),
       //filter(value => value !== null),
       switchMap((user: AuthModel | null) => {
         if (!user || !user.token) {

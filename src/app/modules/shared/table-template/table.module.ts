@@ -12,6 +12,9 @@ import {MatTooltipModule} from "@angular/material/tooltip";
   declarations: [
     TableComponent
   ],
+  exports: [
+    TableComponent
+  ],
   imports: [
     CommonModule,
     MatSortModule,

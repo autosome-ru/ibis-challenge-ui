@@ -1,56 +1,60 @@
 import {AuthModel, UserProfileModel} from "../../models/user.model";
 import {createReducer, on} from "@ngrx/store";
 import {fromUser} from "../action";
+import {
+  loadableData,
+  loadingDataFailure,
+  loadingDataInitial,
+  loadingDataLaunched,
+  loadingDataSuccess
+} from "../../models/store.model";
 
 export interface UserState {
-  isLoading: boolean;
-  isLoaded: boolean;
-  userProfile: UserProfileModel | null;
-  userAuth: AuthModel | null;
-  error: string | null;
+  userProfile: loadableData<UserProfileModel>; // | null
+  userAuth: loadableData<AuthModel>; // | null
 }
 
 export const initialUserState: UserState = {
-  isLoading: false,
-  isLoaded: false,
-  userProfile: null,
-  userAuth: null,
-  error: null
+  userProfile: loadingDataInitial(),
+  userAuth: loadingDataInitial()
 };
 
 export const userReducer = createReducer(
   initialUserState,
   on(fromUser.ClearUser, (state, action) => ({
     ...state,
-    userAuth: null,
-    userProfile: null,
-    isLoaded: false,
-    isLoading: false,
+    userAuth: loadingDataInitial(),
+    userProfile: loadingDataInitial()
   })),
-  on(fromUser.LoadAuth, (state) => ({...state, isLoading: true})),
-  on(fromUser.LoadAuthSuccess, (state, action) => ({
+  on(fromUser.LoadAuth, (state) => ({
     ...state,
-    isLoading: false,
-    userAuth: action.auth
+    userAuth: loadingDataLaunched()
+  })),
+  on(fromUser.LoadAuthFromCookie, (state, action) => state),
+  on(fromUser.LoadAuthFromGitHub, (state, action) => state),
+  on(fromUser.LoadAuthFromCookieSuccess, (state, action) => ({
+    ...state,
+    userAuth: loadingDataSuccess(action.auth)
+  })),
+  on(fromUser.LoadAuthFromGitHubSuccess, (state, action) => ({
+    ...state,
+    userAuth: loadingDataSuccess(action.auth)
   })),
   on(fromUser.LoadAuthFailure, (state, action) => ({
     ...state,
-    isLoaded: false,
-    isLoading: false,
-    error: action.error
+    userAuth: loadingDataFailure()
   })),
-  on(fromUser.LoadProfile, (state) => ({...state, isLoading: true})),
+  on(fromUser.LoadProfile, (state) => ({
+    ...state,
+    userProfile: loadingDataLaunched()
+  })),
   on(fromUser.LoadProfileSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
-    isLoaded: true,
-    userProfile: action.user
+    userProfile: loadingDataSuccess(action.user)
   })),
   on(fromUser.LoadProfileFailure, (state, action) => ({
     ...state,
-    isLoaded: false,
-    isLoading: false,
-    error: action.error
+    userProfile: loadingDataFailure()
   }))
 )
 

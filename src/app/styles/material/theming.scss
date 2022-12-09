@@ -1,41 +1,35 @@
 //https://material.angular.io/guide/theming
 
 @use '../../../../node_modules/@angular/material/index' as mat;
+@use '../../../../node_modules/@angular/material/theming' as mat_theming;
+
 
 @include mat.core();
 
-$_one-accent: mat.define-palette(mat.$pink-palette);
 
-// Define first theme
-$_first-primary: mat.define-palette(mat.$indigo-palette, 600);
-$_first-theme: mat.define-light-theme((
+$first-primary: mat.define-palette(mat.$indigo-palette, 600);
+$one-accent: mat.define-palette(mat.$pink-palette);
+
+$first-theme: mat.define-light-theme((
   color: (
-    primary: $_first-primary,
-    accent: $_one-accent,
+    primary: $first-primary,
+    accent: $one-accent,
   )
 ));
 
-// Define second theme
-$_second-primary: mat.define-palette(mat.$blue-palette, 600);
-$_second-theme: mat.define-dark-theme((
-  color: (
-    primary: $_second-primary,
-    accent: $_one-accent,
-  )
-));
-
-// Define third theme
-$_third-primary: mat.define-palette(mat.$purple-palette, 600);
-$_third-theme: mat.define-dark-theme((
-  color: (
-    primary: $_third-primary,
-    accent: $_one-accent,
-  )
-));
 
 // Apply indigo theme by default
-@include mat.core-theme($_first-theme);
-@include mat.all-component-themes($_first-theme);
+@include mat.core-theme($first-theme);
+@include mat.all-component-themes($first-theme);
+
+@mixin mat_secondary_text {
+  color: mat_theming.$dark-secondary-text;
+}
+
+.mat-secondary-text {
+  @include mat_secondary_text;
+
+}
 
 //.first-theme {
 //  @include mat.button-color($_first-theme);

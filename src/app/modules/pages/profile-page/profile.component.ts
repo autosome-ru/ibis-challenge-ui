@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {AppState, teamProfileSelector, userProfileSelector} from "../../../store";
 import {GithubAuthService} from "../../../services/github-auth.service";
-import {filter, mergeMap, Subscription, tap} from "rxjs";
+import {filter, map, mergeMap, Subscription, tap} from "rxjs";
 import {TeamLoadingService} from "../../../services/team-loading.service";
 import {TeamMemberModel, TeamProfileModel} from "../../../models/team.model";
 import {UserProfileModel} from "../../../models/user.model";
@@ -22,10 +22,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   public User$ = this.store.pipe(select(userProfileSelector),
     filter(x => x !== undefined),
-    filter(x => x !== null));
+    filter(x => x !== null),
+    map(x => x.data));
   public Team$ = this.store.pipe(select(teamProfileSelector),
     filter(x => x !== undefined),
-    filter(x => x !== null));
+    filter(x => x !== null),
+    map(x => x.data));
   public addingNewTeam: boolean = false;
   public teamEditing: boolean = false;
   public teamQuestions: QuestionBase<string>[] = [];
@@ -138,7 +140,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   onSignOutPressed() {
-    this.authService.logoutGithub()
+    //this.authService.logoutGithub()
   }
 
   onSaveTeamChangesPressed() {

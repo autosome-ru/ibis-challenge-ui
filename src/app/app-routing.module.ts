@@ -24,7 +24,13 @@ const routes: Routes = [
   {
     path: 'callback',
     loadChildren: () => import('src/app/modules/pages/github-login-callback-page/callback.module').then(
-        mod => mod.CallbackModule
+      mod => mod.CallbackModule
+    )
+  },
+  {
+    path: 'team_submits',
+    loadChildren: () => import('src/app/modules/pages/team-submits-page/team-submits.module').then(
+      mod => mod.TeamSubmitsModule
     )
   }
 ];

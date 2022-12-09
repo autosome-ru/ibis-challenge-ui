@@ -22,7 +22,17 @@ export class CookiesService {
     this.setElement('useCookies', 'true', true);
   }
 
-  getElementById(key: string): string | null {
+  doesElementExist(key: string): boolean {
+    if (!this.isBrowser) {
+      console.log("Not browser");
+      return false;
+    }
+    let value = localStorage.getItem(key)
+    console.log(value, value != '')
+    return value != '' && value != null
+  }
+
+  getElement(key: string): string | null {
     if (this.isBrowser) {
       return localStorage.getItem(key);
     } else {

@@ -30,3 +30,8 @@ export function convertParamsToUrl(base_url: string, params: IURLParams) {
 export function range(start: number = 0, end: number): number[] {
   return Array.from({length: end - start}, (_, i) => i)
 }
+
+export const cartesian =
+  (...a: any[]) => a.reduce((a, b: any[]) => a.flatMap((d: any) => b.map(e => [d, e].flat())));
+
+

@@ -1,56 +1,54 @@
 import {TeamMemberModel, TeamProfileModel} from "../../models/team.model";
 import {createReducer, on} from "@ngrx/store";
 import {fromTeam} from "../action";
+import {
+  loadableData,
+  loadingDataFailure,
+  loadingDataInitial,
+  loadingDataLaunched,
+  loadingDataSuccess
+} from "../../models/store.model";
 
 export interface TeamState {
-  isLoading: boolean;
-  isLoaded: boolean;
-  team: TeamProfileModel | null;
-  members: TeamMemberModel[] | null;
-  error: string | null;
+  team: loadableData<TeamProfileModel>;
+  members: loadableData<TeamMemberModel[]>;
 }
 
 export const initialTeamState: TeamState = {
-  isLoading: false,
-  isLoaded: false,
-  team: null,
-  members: null,
-  error: null
+  team: loadingDataInitial(),
+  members: loadingDataInitial()
 }
 
 export const teamReducer = createReducer(
   initialTeamState,
   on(fromTeam.ClearTeam, (state) => ({
     ...state,
-    team: null,
-    members: null,
-    isLoaded: false,
-    isLoading: false,
+    team: loadingDataInitial(),
+    members: loadingDataInitial()
   })),
-  on(fromTeam.LoadTeamProfile, (state) => ({...state, isLoading: true})),
+  on(fromTeam.LoadTeamProfile, (state) => ({
+    ...state,
+    team: loadingDataLaunched()
+  })),
   on(fromTeam.LoadTeamProfileSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
-    team: action.team
+    team: loadingDataSuccess(action.team)
   })),
   on(fromTeam.LoadTeamProfileFailure, (state, action) => ({
     ...state,
-    isLoaded: false,
-    isLoading: false,
-    error: action.error
+    team: loadingDataFailure()
   })),
-  on(fromTeam.LoadTeamMembers, (state) => ({...state, isLoading: true})),
+  on(fromTeam.LoadTeamMembers, (state) => ({
+    ...state,
+    members: loadingDataLaunched()
+  })),
   on(fromTeam.LoadTeamMembersSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
-    isLoaded: true,
-    members: action.members
+    members: loadingDataSuccess(action.members)
   })),
   on(fromTeam.LoadTeamMembersFailure, (state, action) => ({
     ...state,
-    isLoaded: false,
-    isLoading: false,
-    error: action.error
+    members: loadingDataFailure()
   }))
 )
 

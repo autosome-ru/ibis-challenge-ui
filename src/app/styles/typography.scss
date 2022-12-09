@@ -1,8 +1,44 @@
 @use "./theming.scss";
 
+//$primary-font-family: 'Inter';
+$primary-font-family: 'Montserrat';
+//$secondary-font-family: 'Montserrat';
+$secondary-font-family: 'Fira Sans';
+
+.ibis-display-1 {
+  background: linear-gradient(90deg, map-get(theming.$third_theme, "dark") 0%, map-get(theming.$second_theme, "light") 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+
+  margin: 24px 0;
+  font-family: $primary-font-family, sans-serif;
+  font-size: 56px;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.ibis-display-2 {
+  margin: 12px 0;
+  font-family: $secondary-font-family, sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.ibis-display-3 {
+  margin: 6px 0;
+  font-family: $secondary-font-family, sans-serif;
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+
 h1 {
   color: map-get(theming.$first_theme, "dark") !important;
-  font-family: 'Inter', sans-serif;
+  font-family: $primary-font-family, sans-serif !important;
   font-style: normal;
   font-weight: 700;
   font-size: 25px;
@@ -11,7 +47,7 @@ h1 {
 
 h2 {
   color: map-get(theming.$first_theme, "dark") !important;
-  font-family: 'Inter', sans-serif;
+  font-family: $primary-font-family, sans-serif !important;
   font-style: normal;
   font-weight: 700;
   font-size: 22px;
@@ -20,7 +56,7 @@ h2 {
 
 h3 {
   color: map-get(theming.$first_theme, "dark") !important;
-  font-family: 'Inter', sans-serif;
+  font-family: $primary-font-family, sans-serif !important;
   font-style: normal;
   font-weight: 700;
   font-size: 19px;
@@ -29,7 +65,7 @@ h3 {
 
 h4 {
   color: map-get(theming.$text_theme, "primary") !important;
-  font-family: 'Montserrat', sans-serif;
+  font-family: $secondary-font-family, sans-serif !important;
   font-style: normal;
   font-weight: 600;
   font-size: 19px;
@@ -38,7 +74,7 @@ h4 {
 
 h5 {
   color: map-get(theming.$text_theme, "primary") !important;
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: $secondary-font-family, sans-serif !important;
   font-style: normal !important;
   font-weight: 600 !important;
   font-size: 17px !important;
@@ -47,7 +83,7 @@ h5 {
 
 h6 {
   color: map-get(theming.$text_theme, "dark") !important;
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: $secondary-font-family, sans-serif !important;
   font-style: normal !important;
   font-weight: 600 !important;
   font-size: 17px !important;
@@ -56,7 +92,7 @@ h6 {
 
 html, body {
   color: map-get(theming.$text_theme, "primary") !important;
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: $secondary-font-family, sans-serif !important;
   font-style: normal !important;
   font-weight: 400 !important;
   font-size: 14px !important;

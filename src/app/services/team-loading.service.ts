@@ -12,7 +12,7 @@ import {convertTeamProfileBackendToTeamProfileModel} from "../helpers/converters
 })
 export class TeamLoadingService {
 
-  tokenStore$: Observable<string | undefined> = this.store.pipe(select(userAuthSelector)).pipe(map(x => x?.token));
+  tokenStore$: Observable<string | undefined> = this.store.pipe(select(userAuthSelector)).pipe(map(x => x.data?.token));
 
   constructor(private readonly http: HttpClient,
               private readonly store: Store<AppState>

@@ -1,0 +1,92 @@
+<h1>Your team's submits</h1>
+
+<mat-expansion-panel [(expanded)]="panelOpenState"
+                     [matTooltipDisabled]="panelOpenState"
+                     [matTooltip]="getSelectionFullDescription()"
+                     matTooltipPosition="below">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{getSelectionTitle()}}
+    </mat-panel-title>
+    <mat-panel-description>
+      {{getSelectionDescription()}}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <ng-container *ngTemplateOutlet="formForTfDiscipline">
+  </ng-container>
+</mat-expansion-panel>
+
+
+<!--<ibis-mat-table (sortEmitter)=""-->
+<!--                [columnModel]="columnModel"-->
+<!--                [data]="submitsToShow$ | async"-->
+<!--                [displayedColumns]="displayedColumns"-->
+<!--                [initialSorting]="initialSort"-->
+<!--                [sortingDataAccessor]="sortingDataAccessor"-->
+<!--&gt;-->
+<!--</ibis-mat-table>-->
+
+
+<ng-template #formForTfDiscipline>
+  <form [formGroup]="selectionControl">
+
+    <mat-radio-group aria-label="Select an option" formControlName="method">
+      <mat-label>Method</mat-label>
+      <mat-radio-button *ngFor="let item of methodsOptions" [value]="item">
+        {{item}} <span class="mat-secondary-text"> - {{getFullNameOfSubDiscipline(item)}} </span>
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field appearance="standard">
+      <mat-label>Discipline</mat-label>
+      <mat-select formControlName="discipline">
+        <mat-option
+          *ngFor="let item of disciplineOptions"
+          [value]="item">
+          {{item}} <span class="mat-secondary-text"> - {{getFullNameOfSuperDiscipline(item)}}</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isDisciplineSelected()" appearance="standard">
+      <mat-label>Transcription factor</mat-label>
+      <mat-select formControlName="tf">
+        <mat-option
+          *ngFor="let item of tfOptions"
+          [value]="item">
+          {{item}} <span class="mat-secondary-text"> - {{getFullNameOfTF(item)}}</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <!--    <div class="ibis-button-row">-->
+    <!--      <button (click)="clearSelections()"-->
+    <!--              class="round sm sm-text blue-text"-->
+    <!--              mat-button>-->
+    <!--        Clear-->
+    <!--        <mat-icon>clear</mat-icon>-->
+    <!--      </button>-->
+    <!--    </div>-->
+  </form>
+
+</ng-template>
+
+
+<!--<mat-form-field appearance="fill">-->
+<!--  <mat-label>Discipline</mat-label>-->
+<!--  <input [formControl]="disciplineControl"-->
+<!--         [matAutocomplete]="autoDiscipline"-->
+<!--         aria-label="Discipline selection" matInput-->
+<!--         placeholder="Pick one"-->
+<!--         type="text">-->
+<!--  <mat-autocomplete #autoDiscipline="matAutocomplete">-->
+<!--    <mat-option-->
+<!--      *ngFor="let item of disciplineOptions"-->
+<!--      [value]="item">-->
+<!--      {{item}} - {{getFullNameOfSuperDiscipline(item)}}-->
+<!--    </mat-option>-->
+<!--  </mat-autocomplete>-->
+<!--</mat-form-field>-->
+

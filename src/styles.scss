@@ -48,6 +48,14 @@ form {
   flex-direction: column;
 }
 
+.ibis-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 
 
 
