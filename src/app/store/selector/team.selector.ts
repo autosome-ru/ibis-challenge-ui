@@ -7,5 +7,9 @@ export const teamProfileSelector = createSelector(
   selectTeam, (state) => state.team
 );
 export const teamMembersSelector = createSelector(
-  selectTeam, (state) => state.members
+  selectTeam, (state) => {
+    if (state.team.data)
+      return state.team.data.members;
+    return []
+  }
 );

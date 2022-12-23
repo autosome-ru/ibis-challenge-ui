@@ -101,7 +101,6 @@ const tableTestData = {
 
 
 export function containsInArrayValidator(permittedValues: readonly string[]): ValidatorFn {
-  //console.log(permittedValues)
   return (control: AbstractControl): ValidationErrors | null => {
     const forbidden = !permittedValues.includes(control.value);
     return forbidden ? {notContainingName: {value: control.value}} : null;
@@ -156,7 +155,6 @@ export class TeamSubmitsHomeComponent implements OnInit, OnDestroy {
     this.componentSubs.add(
       this.selectionControl.controls['discipline'].valueChanges.subscribe(
         (value) => {
-          console.log(this.selectionControl.value.discipline, value);
           this.onDisciplineSelected(value || "");
         }
       ))
@@ -230,7 +228,6 @@ export class TeamSubmitsHomeComponent implements OnInit, OnDestroy {
   }
 
   updateTFoptions(byMethod: string = this.selectionControl.value.discipline || "") {
-    //console.log("update tf options", this.selectionControl.value.discipline)
     this.tfOptions = this.disciplinesTFmap.get(byMethod as typeof superDisciplines[number]) || [];
   }
 

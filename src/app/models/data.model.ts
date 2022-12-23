@@ -21,10 +21,16 @@ export interface LeaderboardDisciplineInfoModel {
 //   comment: string
 // }
 
+export interface DisciplineMetricsInfo {
+  discipline: string,
+  metrics: string[]
+}
+
 export interface ChallengeGeneralInfoModel {
   //methods: LeaderboardMethodInfoModel[],
   disciplines: LeaderboardDisciplineInfoModel[],
-  tfs: LeaderboardTFInfoModel[]
+  tfs: LeaderboardTFInfoModel[],
+  metrics: DisciplineMetricsInfo[]
 }
 
 export interface ChallengeSpecificMap {
@@ -32,5 +38,28 @@ export interface ChallengeSpecificMap {
   method: challengeMethod;
   discipline: LeaderboardDisciplineInfoModel['name'];
   tfs: LeaderboardTFInfoModel['name'][]
+}
+
+export type SubmitModel = {
+  [additional: string]: number;
+} & {
+  id: number;
+  name: string;
+  info: string;
+  combinedRank: number;
+  team: string;
+}
+
+export const metric_prefix = 'm@';
+export const rank_prefix = 'r@';
+
+export interface SubmitBackendModel {
+  id: number,
+  name: string,
+  info: string,
+  aggregated_rank: number,
+  metrics: number[],
+  ranks: number[],
+  team: string;
 }
 

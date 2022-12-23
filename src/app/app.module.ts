@@ -13,7 +13,7 @@ import {StoreModule} from '@ngrx/store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
 import {EffectsModule} from '@ngrx/effects';
-import {appReducers, ChallengeDataEffects, UserEffects} from "./store";
+import {appReducers, ChallengeDataEffects, TeamEffects, UserEffects} from "./store";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {LayoutBaseComponent} from './components/shared/layout-base/layout-base.component';
 
@@ -34,7 +34,7 @@ import {LayoutBaseComponent} from './components/shared/layout-base/layout-base.c
     CodeModule,
     HttpClientModule,
     StoreModule.forRoot(appReducers, {}),
-    EffectsModule.forRoot([UserEffects, ChallengeDataEffects]),
+    EffectsModule.forRoot([UserEffects, TeamEffects, ChallengeDataEffects]),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
     MatProgressSpinnerModule
   ],

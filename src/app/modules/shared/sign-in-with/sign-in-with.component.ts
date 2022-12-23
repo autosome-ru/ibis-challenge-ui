@@ -29,7 +29,6 @@ export class SignInWithComponent extends LayoutBaseComponent {
   }
 
   onSignInPressed() {
-    console.log("onSignInPressed")
     this.github.loginGitHub()
   }
 }

@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, HostBinding, Input, OnInit} from '@angular/core';
-import {interval, Subscription, map, Observable} from "rxjs";
+import {interval, map, Observable} from "rxjs";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,7 +25,6 @@ export class LogoComponent implements OnInit {
 
   ngOnInit(): void {
     this.source = interval(1000).pipe(map(x => x % 5));
-    //this.switching = source.subscribe(val => {console.log(val % 2) ; val % 2;});
   }
 
 }

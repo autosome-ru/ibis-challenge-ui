@@ -15,4 +15,5 @@ export namespace fromUser {
   export const LoadAuthFromCookieSuccess = createAction('[User] Load authentication from cookie success', props<{ auth: AuthModel }>())
   export const LoadAuthFromGitHubSuccess = createAction('[User] Load authentication from GitHub server success', props<{ auth: AuthModel }>())
   export const LoadAuthFailure = createAction('[User] Load authentication failure')
+  export const LoadAuthSuccess = createAction('[User] Load authentication success signal')
 }

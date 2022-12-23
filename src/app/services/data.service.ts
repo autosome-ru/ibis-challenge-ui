@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Store} from "@ngrx/store";
 import {AppState} from "../store";
-import {apiChallengeGeneralInfo} from "../helpers/constants/urls";
-import {map, Observable} from "rxjs";
-import {ChallengeGeneralInfoModel, challengeStage} from "../models/challenge.model";
+import {apiChallengeGeneralInfo, apiChallengeSpecificInfo, apiChallengeSubmits} from "../helpers/constants/urls";
+import {map, Observable, tap} from "rxjs";
+import {ChallengeGeneralInfoModel, ChallengeSpecificMap, SubmitBackendModel, SubmitModel} from "../models/data.model";
+import {convertSubmitsBackendModel} from "../helpers/converters/data-converter";
 
 @Injectable({
   providedIn: 'root'
@@ -21,17 +22,36 @@ export class DataService {
    */
   fetchChallengeGeneralInfo(): Observable<ChallengeGeneralInfoModel> {
     return this.http.get<string>(apiChallengeGeneralInfo, {
-      headers: new HttpHeaders()
-        .set('Content-Type', 'application/json; charset=utf-8')
-    }).pipe(map(value => JSON.parse(value)))
-
+      headers: this.headers
+    }).pipe(map(value => JSON.parse(value)));
   }
 
   /**
    * @description TF - disciplines - methods map
    */
-  fetchStageSpecificInfo(stage: challengeStage): Observable<ChallengeGeneralInfoModel> {
-    let params = new HttpParams().set('stage', stage);
-    return this.http.get<ChallengeGeneralInfoModel>(apiChallengeGeneralInfo, {headers: this.headers, params: params});
+  fetchStageSpecificInfo(): Observable<ChallengeSpecificMap[]> {
+    return this.http.get<string>(apiChallengeSpecificInfo, {
+      headers: this.headers
+    }).pipe(map(value => JSON.parse(value)));
+  }
+
+  /**
+   * @description All submits for specific discipline
+   */
+  fetchSubmits(discipline: string, tf: string, method: string, metrics: string[], mode: string = 'leaderboard'): Observable<SubmitModel[]> {
+    console.log("fetchSubmits got", discipline);
+    return this.http.get<{ submits: SubmitBackendModel[] }>(apiChallengeSubmits, {
+      headers: this.headers,
+      params: {
+        discipline: discipline,
+        tf: tf,
+        method: method,
+        mode: mode
+      }
+    }).pipe(
+      tap(x => console.log("fetchSubmits get", x)),
+      map(value => value.submits.map(x => convertSubmitsBackendModel(x, metrics))),
+      tap(x => console.log("fetchSubmits get", x))
+    );
   }
 }

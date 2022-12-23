@@ -106,7 +106,6 @@ export class GithubAuthService {
           }))
     ).subscribe({
       next: (profileBackend) => {
-        console.log(profileBackend);
         this.store.dispatch(fromUser.LoadProfileSuccess({user: convertUserProfileBackendToUserProfileModel(profileBackend)}));
       },
       error: (error) => {
@@ -124,13 +123,11 @@ export class GithubAuthService {
   }
 
   logoutGithub(): void {
-    console.log("logoutGithub")
     this.store.dispatch(fromUser.ClearUser());
     this.router.navigate(['']);
   }
 
   logoutGithubAndForgetToken(): void {
-    console.log("logoutGithubAndForgetToken")
     this.cookiesService.removeElement(this.tokenFieldName);
     this.store.dispatch(fromUser.ClearUser());
     this.router.navigate(['']);
@@ -150,7 +147,6 @@ export class GithubAuthService {
   }
 
   loginGitHub() {
-    console.log("loginGitHub of service called")
     this.store.dispatch(fromUser.LoadAuth())
   }
 
@@ -167,26 +163,24 @@ export class GithubAuthService {
     return window_;
   }
 
-  fetchGitHubToken(): Observable<{ auth: AuthModel, fromCookie: boolean }> {
-    if (this.doesGitHubTokenCookieExist()) {
-      // token already exists in cookie
-      console.log("token already exists in cookie")
-      return of({
-        auth: {token: this.cookiesService.getElement(this.tokenFieldName)!},
-        fromCookie: true
-      })
-    } else {
-      // fetch token from GitHub
-      console.log("fetch token from GitHub")
-      const GitHubWindow: WindowProxy = this.openGithubLoginWindow();
-      return fromEvent(GitHubWindow, 'beforeunload').pipe(
-        mergeMap(() => of({
-          auth: {token: GitHubWindow.sessionStorage.getItem('code')!},
-          fromCookie: false
-        }))
-      )
-    }
-  }
+  // fetchGitHubToken(): Observable<{ auth: AuthModel, fromCookie: boolean }> {
+  //   if (this.doesGitHubTokenCookieExist()) {
+  //     // token already exists in cookie
+  //     return of({
+  //       auth: {token: this.cookiesService.getElement(this.tokenFieldName)!},
+  //       fromCookie: true
+  //     })
+  //   } else {
+  //     // fetch token from GitHub
+  //     const GitHubWindow: WindowProxy = this.openGithubLoginWindow();
+  //     return fromEvent(GitHubWindow, 'beforeunload').pipe(
+  //       mergeMap(() => of({
+  //         auth: {token: GitHubWindow.sessionStorage.getItem('code')!},
+  //         fromCookie: false
+  //       }))
+  //     )
+  //   }
+  // }
 
   doesGitHubTokenCookieExist(): boolean {
     return this.cookiesService.doesElementExist(this.tokenFieldName)
@@ -214,7 +208,6 @@ export class GithubAuthService {
   }
 
   fetchUser(token: string): Observable<UserProfileModel> {
-    console.log("Got token", token);
     return this.http.get<UserProfileModel>(apiAuthProfileUrl,
       {
         headers: this.headers.set('Authorization', `Bearer ${token}`)
@@ -222,7 +215,6 @@ export class GithubAuthService {
   }
 
   clearCookie(): void {
-    console.log("Clearing cookie");
     this.cookiesService.removeElement(this.tokenFieldName);
   }
 

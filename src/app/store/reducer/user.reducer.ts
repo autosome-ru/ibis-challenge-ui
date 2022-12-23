@@ -55,6 +55,7 @@ export const userReducer = createReducer(
   on(fromUser.LoadProfileFailure, (state, action) => ({
     ...state,
     userProfile: loadingDataFailure()
-  }))
+  })),
+  on(fromUser.LoadAuthSuccess, (state, action) => state)
 )
 

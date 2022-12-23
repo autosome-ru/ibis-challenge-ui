@@ -7,24 +7,38 @@ import {DataService} from "../../services/data.service";
 
 @Injectable()
 export class ChallengeDataEffects {
-  public loadData$ = createEffect(() =>
+  public loadGeneralData$ = createEffect(() =>
     this.actions$.pipe(
-      map(val => {
-        //console.log(val);
-        return val;
-      }),
       ofType(fromChallengeInfo.LoadGeneralInfo),
       mergeMap(() =>
         this.dataService.fetchChallengeGeneralInfo().pipe(
           map((info) => {
-              console.log(info);
               return fromChallengeInfo.LoadGeneralInfoSuccess({info: info});
             }
           ), catchError(() => {
             return of(fromChallengeInfo.LoadGeneralInfoFailure());
           })
         )
-      )
+      ), catchError(() => {
+        return of(fromChallengeInfo.LoadGeneralInfoFailure());
+      })
+    ))
+
+  public loadSpecificData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromChallengeInfo.LoadSpecificMaps),
+      mergeMap(() =>
+        this.dataService.fetchStageSpecificInfo().pipe(
+          map((maps) => {
+              return fromChallengeInfo.LoadSpecificMapsSuccess({maps: maps});
+            }
+          ), catchError(() => {
+            return of(fromChallengeInfo.LoadSpecificMapsFailure());
+          })
+        )
+      ), catchError(() => {
+        return of(fromChallengeInfo.LoadSpecificMapsFailure());
+      })
     ))
 
   constructor(private actions$: Actions, private dataService: DataService) {

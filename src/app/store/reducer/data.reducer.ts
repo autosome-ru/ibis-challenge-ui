@@ -1,4 +1,4 @@
-import {ChallengeGeneralInfoModel, ChallengeSpecificMap,} from "../../models/challenge.model";
+import {ChallengeGeneralInfoModel, ChallengeSpecificMap,} from "../../models/data.model";
 import {createReducer, on} from "@ngrx/store";
 import {fromChallengeInfo} from "../action";
 import {loadableData, loadingDataFailure, loadingDataLaunched, loadingDataSuccess} from "../../models/store.model";

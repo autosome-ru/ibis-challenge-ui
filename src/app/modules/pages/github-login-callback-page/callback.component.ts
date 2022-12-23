@@ -29,10 +29,8 @@ export class CallbackComponent implements OnInit {
 
   ngOnInit() {
     (<any>window).navigation_present = true;
-    console.log(this.route.toString())
     sessionStorage.setItem("code", this.route.snapshot.queryParams['code'])
     //setTimeout(() => window.close(), 5000)
-    console.log("This")
     window.close()
   }
 

@@ -74,7 +74,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
               private readonly teamService: TeamLoadingService,
               private readonly questionService: QuestionService,
               private readonly qcs: QuestionControlService) {
-    this.teamService.loadTeams();
+    //this.teamService.loadTeams();
     this.TeamSubscription = this.User$.pipe(
       tap(x => this.user = x as UserProfileModel),
       mergeMap(() => this.Team$
@@ -198,11 +198,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.memberQuestions.push(this.questionService.getQuestions(currentMemberQuestions));
     this.memberForms.push(this.qcs.toFormGroup(this.memberQuestions[last_idx]))
     this.teamEditingOn();
-    console.log(this.team!.members, this.memberForms)
   }
 
   onAddNewTeamMemberPressed(name = "", affiliation = "", country = "", city = "") {
-    console.log(this.team!.members);
     let last_idx = this.team!.members.length;
     this.team!.members.push({
       name: name,

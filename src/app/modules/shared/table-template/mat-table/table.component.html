@@ -1,12 +1,13 @@
-<div class="ibis-table">
-  <div class="ibis-table__table" style="min-width: 100%">
+<div *ngIf="!isEmpty; else emptyContentTemplate" class="ibis-table">
+  <div class="ibis-table__table" style="min-width: 100%"
+  >
     <table
-      #sort1="matSort"
+      #sort="matSort"
       #table
-      (matSortChange)="externalPaginator ? emitChanges(externalPaginator) : null"
+      (matSortChange)="sortChanged($event)"
       [dataSource]="_dataSource"
-      [matSortActive]="initialSort ? initialSort.active : null"
-      [matSortDirection]="initialSort ? initialSort.direction : ''"
+      [matSortActive]="initialSorting ? initialSorting.active : ''"
+      [matSortDirection]="initialSorting ? initialSorting.direction : ''"
       [multiTemplateDataRows]="!!expandCellContentTemplate"
       mat-table
       matSort
@@ -32,23 +33,27 @@
       </ng-container>
 
       <ng-container
-        *ngFor="let column of columnModel | columnModelToList"
+        *ngFor="let column of columnModel | columnModelToList; let index=index"
         [matColumnDef]="column.key"
       >
         <th *matHeaderCellDef
             [disabled]="column.value?.disabledSort"
             [matTooltip]="column.value?.helpMessage"
+            [start]="column.value?.isDesc ? 'desc' : 'asc'"
             mat-header-cell
-            mat-sort-header>{{column.value.view}}</th>
+            mat-sort-header
+            style="text-align: center"
+            tabindex="-1">{{column.value.view}}</th>
         <td
-          *matCellDef="let row"
+          *matCellDef="let row; let index=index"
+          [ngClass]="cellClass"
           [ngStyle]="column.value.colorStyle ?
                      {'background': column.value.colorStyle(row)} : null"
           mat-cell
         >
           <ng-container
             *ngIf="column.value.columnTemplate; else valueConverterTemplate"
-            [ngTemplateOutletContext]="{value: row[column.key], row: row}"
+            [ngTemplateOutletContext]="{value: row[column.key], row: row, index: index}"
             [ngTemplateOutlet]="column.value.columnTemplate"
           ></ng-container>
           <ng-template #valueConverterTemplate>
@@ -58,13 +63,28 @@
           </ng-template>
         </td>
       </ng-container>
+      <ng-container *ngIf="actionTemplate">
+        <ng-container matColumnDef="__action__" stickyEnd>
+          <th *matHeaderCellDef
+              class="px-0"
+              mat-header-cell
+          >
+          </th>
+          <td *matCellDef="let element" class="px-0" mat-cell>
+            <ng-container
+              [ngTemplateOutletContext]="{row: element}"
+              [ngTemplateOutlet]="actionTemplate"
+            >
+            </ng-container>
+          </td>
+        </ng-container>
+      </ng-container>
 
-
-      <tr *matHeaderRowDef="this.displayedColumns" mat-header-row></tr>
-      <tr (click)="_handleRowClick(row)" *matRowDef="let row; columns: this.displayedColumns;"
+      <tr *matHeaderRowDef="getDisplayedColumns()" mat-header-row></tr>
+      <tr (click)="_handleRowClick(row)" *matRowDef="let row; columns: getDisplayedColumns();"
           [class._borderless]="expandCellContentTemplate || popoverContentTemplate || clickableRow"
-          [class._clickable]="expandCellContentTemplate || popoverContentTemplate || clickableRow"
-          [class._colorClick]="!expandCellContentTemplate && !popoverContentTemplate && clickableRow"
+          [class._clickable]="clickableRow"
+          [class._colorClick]="clickableRow"
           [class._shadows-click]="expandCellContentTemplate || popoverContentTemplate"
           class="ibis-table__table-row"
           mat-row
@@ -77,23 +97,22 @@
         </tr>
       </ng-container>
     </table>
-    <div *ngIf="dataLoading"
-         class="ibis-table__table-loading"
-    >
-      <mat-spinner
-        *ngIf="dataLoading"
-        [diameter]="100"
-        color="accent"
-      ></mat-spinner>
-    </div>
+    <ng-container *ngIf="noDataAvailable()">
+            <span style="width: 100%;text-align: center;padding-top: 10px;"
+            >
+              No Data Available
+            </span>
+    </ng-container>
   </div>
   <mat-paginator
-    *ngIf="paginatorLength"
-    [length]="paginatorLength"
+    *ngIf="paginatorOptions"
     [pageSizeOptions]="paginatorOptions"
-    [pageSize]="paginatorPageSize || paginatorOptions[0]"
     class="ibis-table__paginator"
     showFirstLastButtons
   ></mat-paginator>
 </div>
 
+
+<ng-template #emptyContentTemplate>
+
+</ng-template>

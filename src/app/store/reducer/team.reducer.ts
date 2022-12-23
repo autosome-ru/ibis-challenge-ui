@@ -1,4 +1,4 @@
-import {TeamMemberModel, TeamProfileModel} from "../../models/team.model";
+import {TeamProfileModel} from "../../models/team.model";
 import {createReducer, on} from "@ngrx/store";
 import {fromTeam} from "../action";
 import {
@@ -11,12 +11,10 @@ import {
 
 export interface TeamState {
   team: loadableData<TeamProfileModel>;
-  members: loadableData<TeamMemberModel[]>;
 }
 
 export const initialTeamState: TeamState = {
-  team: loadingDataInitial(),
-  members: loadingDataInitial()
+  team: loadingDataInitial()
 }
 
 export const teamReducer = createReducer(
@@ -37,18 +35,18 @@ export const teamReducer = createReducer(
   on(fromTeam.LoadTeamProfileFailure, (state, action) => ({
     ...state,
     team: loadingDataFailure()
-  })),
-  on(fromTeam.LoadTeamMembers, (state) => ({
-    ...state,
-    members: loadingDataLaunched()
-  })),
-  on(fromTeam.LoadTeamMembersSuccess, (state, action) => ({
-    ...state,
-    members: loadingDataSuccess(action.members)
-  })),
-  on(fromTeam.LoadTeamMembersFailure, (state, action) => ({
-    ...state,
-    members: loadingDataFailure()
   }))
+  // on(fromTeam.LoadTeamMembers, (state) => ({
+  //   ...state,
+  //   members: loadingDataLaunched()
+  // })),
+  // on(fromTeam.LoadTeamMembersSuccess, (state, action) => ({
+  //   ...state,
+  //   members: loadingDataSuccess(action.members)
+  // })),
+  // on(fromTeam.LoadTeamMembersFailure, (state, action) => ({
+  //   ...state,
+  //   members: loadingDataFailure()
+  // }))
 )
 

@@ -7,6 +7,7 @@ import {Store} from "@ngrx/store";
 import {AppState} from "../reducer";
 import {userAuthSelector} from "../selector";
 
+// https://dev.to/this-is-angular/ngrx-tips-i-needed-in-the-beginning-4hno#dont-dispatch-actions-conditionally
 
 @Injectable()
 export class UserEffects {
@@ -93,7 +94,7 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(fromUser.LoadAuthFromCookieSuccess),
       mergeMap(() =>
-        of(fromUser.LoadProfile())
+        of(fromUser.LoadAuthSuccess())
       )
     )
   )
@@ -103,6 +104,15 @@ export class UserEffects {
       ofType(fromUser.LoadAuthFromGitHubSuccess),
       concatLatestFrom(() => this.store.select(userAuthSelector)),
       tap(([, auth]) => this.authService.storeCookie(auth.data!)),
+      mergeMap(() =>
+        of(fromUser.LoadAuthSuccess())
+      )
+    )
+  )
+
+  public authLoadSuccessForUserProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromUser.LoadAuthSuccess),
       mergeMap(() =>
         of(fromUser.LoadProfile())
       )
@@ -116,13 +126,13 @@ export class UserEffects {
       filter(([_, auth]) => auth.loaded),
       mergeMap(([_, auth]) =>
         this.authService.fetchUser(auth.data!.token).pipe(
-          tap(x => console.log("From Load Profile", x)),
           mergeMap((profile) =>
             of(fromUser.LoadProfileSuccess({user: profile}))
           ),
           catchError((error) => of(fromUser.LoadProfileFailure()))
         )
-      )
+      ),
+      catchError((error) => of(fromUser.LoadProfileFailure()))
     )
   )
 

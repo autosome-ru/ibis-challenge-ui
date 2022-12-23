@@ -18,9 +18,6 @@ export class AppComponent implements OnInit {
   constructor(private authService: GithubAuthService,
               private location: Location,
               private readonly store: Store<AppState>) {
-    //console.log(leaderboardDisciplinesAndTFs);
-    //console.log(leaderboardTFs);
-    //console.log(leaderboardDisciplines)
   }
 
 
@@ -31,6 +28,7 @@ export class AppComponent implements OnInit {
 
     this.store.dispatch(fromUser.LoadAuthFromCookie());
     this.store.dispatch(fromChallengeInfo.LoadGeneralInfo());
+    this.store.dispatch(fromChallengeInfo.LoadSpecificMaps());
   }
 
 }

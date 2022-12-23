@@ -1,0 +1,27 @@
+<h3> Show submits for: </h3>
+<p> Discipline: <b>{{(routeParams$ | async)?.discipline}}</b></p>
+<p> Method: <b>{{(routeParams$ | async)?.method}}</b></p>
+<p> TF: <b>{{(routeParams$ | async)?.tf}}</b></p>
+
+
+<ng-template #loadingTemplate>
+  <mat-progress-spinner
+    [diameter]="50"
+    color="accent"
+    mode="indeterminate"
+  ></mat-progress-spinner>
+</ng-template>
+
+<ibis-mat-table
+  (sortEmitter)="saveCurrentSort($event)"
+  *ngIf="!submitsLoading; else loadingTemplate"
+  [cellClass]="'cell-center-text'"
+  [columnModel]="columnModel"
+  [data]="(submitsToShow$ | async)!"
+  [displayedColumns]="displayedColumns"
+  [initialSorting]="(submitsSort$ | async)!"
+  [sortingDataAccessor]="sortingDataAccessor"
+>
+
+  <!--  [sortingDataAccessor]="sortingDataAccessor"-->
+</ibis-mat-table>

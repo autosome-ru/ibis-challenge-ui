@@ -13,11 +13,6 @@ export const loadingDataLaunched = <T>(): loadableData<T> => {
 }
 
 export const loadingDataSuccess = <T>(data: T): loadableData<T> => {
-  console.log("loadingDataSuccess", {
-    data: data,
-    loading: false,
-    loaded: true
-  })
   return {
     data: data,
     loading: false,

@@ -28,8 +28,6 @@ export class AuthGuard implements CanLoad, CanActivate {
   }
 
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
-    console.log(this.location.normalize(!!segments && segments.length > 0 ?
-      segments.map(s => s.path).join('/') : '/'))
     return this.checkAndNavigate(
       this.location.normalize(!!segments && segments.length > 0 ?
         segments.map(s => s.path).join('/') : '/')

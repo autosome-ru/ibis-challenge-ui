@@ -32,6 +32,12 @@ const routes: Routes = [
     loadChildren: () => import('src/app/modules/pages/team-submits-page/team-submits.module').then(
       mod => mod.TeamSubmitsModule
     )
+  },
+  {
+    path: 'tf_discipline',
+    loadChildren: () => import('src/app/modules/pages/tf-discipline-page/tf-discipline.module').then(
+      mod => mod.TfDisciplineModule
+    )
   }
 ];
 

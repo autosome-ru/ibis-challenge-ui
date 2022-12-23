@@ -49,7 +49,6 @@ export class TableComponent<T> implements AfterViewInit, OnChanges {
   @Input()
   public displayedColumns!: IBISTableDisplayedColumns<T>;
   public _dataSource!: MatTableDataSource<T>;
-
   public initialValue!: T[];
   @Input()
   public initialSorting!: { active: string; direction: SortDirection };
@@ -86,6 +85,10 @@ export class TableComponent<T> implements AfterViewInit, OnChanges {
     }
   }
 
+  noDataAvailable() {
+    return !(this._dataSource && this._dataSource.data && this._dataSource.data.length != 0)
+  }
+
   ngAfterViewInit(): void {
     if (this._dataSource) {
       this.checkDataSource();
@@ -100,6 +103,7 @@ export class TableComponent<T> implements AfterViewInit, OnChanges {
       this._dataSource.sortData = ((data, sort) =>
         sort.direction ? this.sortData(data, sort) : this.initialValue);
     }
+    console.log(this.sort);
     this._dataSource.sort = this.sort;
 
     if (this.paginatorOptions) {

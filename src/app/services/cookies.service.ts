@@ -24,11 +24,9 @@ export class CookiesService {
 
   doesElementExist(key: string): boolean {
     if (!this.isBrowser) {
-      console.log("Not browser");
       return false;
     }
     let value = localStorage.getItem(key)
-    console.log(value, value != '')
     return value != '' && value != null
   }
 

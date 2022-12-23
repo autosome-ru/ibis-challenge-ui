@@ -34,4 +34,16 @@ export function range(start: number = 0, end: number): number[] {
 export const cartesian =
   (...a: any[]) => a.reduce((a, b: any[]) => a.flatMap((d: any) => b.map(e => [d, e].flat())));
 
+export class round {
+  private decimals: number;
+
+  constructor(decimals: number = 0) {
+    this.decimals = decimals;
+  }
+
+  round(value: number): string {
+    return value.toFixed(this.decimals);
+  }
+
+}
 

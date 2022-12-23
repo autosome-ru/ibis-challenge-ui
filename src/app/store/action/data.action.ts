@@ -1,5 +1,5 @@
 import {createAction, props} from "@ngrx/store";
-import {ChallengeGeneralInfoModel, ChallengeSpecificMap} from "../../models/challenge.model";
+import {ChallengeGeneralInfoModel, ChallengeSpecificMap} from "../../models/data.model";
 
 export namespace fromChallengeInfo {
 
