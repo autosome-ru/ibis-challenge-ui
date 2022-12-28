@@ -65,6 +65,8 @@ export class TableComponent<T> implements AfterViewInit, OnChanges {
   public sortEmitter = new EventEmitter<Sort>();
   @Output()
   public actionClicked = new EventEmitter<T>();
+  @Input()
+  headerGroups: any;
   @HostBinding("class.ibis-table")
   private readonly cssClass = true;
   @Input()

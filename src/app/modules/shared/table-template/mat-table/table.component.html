@@ -80,6 +80,16 @@
         </ng-container>
       </ng-container>
 
+      <ng-container *ngFor="let group of headerGroups">
+        <ng-container [matColumnDef]="group.columnDef">
+
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngFor="let group of headerGroups">
+        <tr *matHeaderRowDef="group.checkDataTypeGroups()" mat-header-row style="top:0"></tr>
+      </ng-container>
+
       <tr *matHeaderRowDef="getDisplayedColumns()" mat-header-row></tr>
       <tr (click)="_handleRowClick(row)" *matRowDef="let row; columns: getDisplayedColumns();"
           [class._borderless]="expandCellContentTemplate || popoverContentTemplate || clickableRow"
