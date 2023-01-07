@@ -1,0 +1,33 @@
+<div class="pfm-input" id="pfm-input--initial" [ngClass]="{'hidden': mode != 'initial'}">
+  <label for="pfm-input__window--initial"></label>
+  <textarea class="pfm-input__window" id="pfm-input__window--initial"
+               [(ngModel)]="input">
+
+  </textarea>
+  <button class="pfm-input__button round lg lg-text" mat-flat-button
+          id="pfm-input__button--initial" (click)=submit(input)>
+    Submit
+  </button>
+</div>
+<div class="pfm-input" id="pfm-input--error" [ngClass]="{'hidden': mode != 'error'}">
+  <label for="pfm-input__window--error"></label>
+  <div id="pfm-input__error-bar">
+    <span [textContent]="validationMessage"></span>
+  </div>
+  <div class="text-area">
+    <textarea class="pfm-input__window" id="pfm-input__window--error"
+              [(ngModel)]="input"
+              matInput
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="18">
+    </textarea>
+  </div>
+  <button class="pfm-input__button round lg lg-text" mat-flat-button
+          id="pfm-input__button--error" (click)=submit(input)>
+    Edit
+  </button>
+</div>
+<div class="pfm-input" id="pfm-input--success" [ngClass]="{'hidden': mode != 'success'}">
+
+</div>

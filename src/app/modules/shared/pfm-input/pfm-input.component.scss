@@ -1,0 +1,53 @@
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.pfm-input {
+}
+
+.pfm-input__window {
+  display: block;
+  margin: auto;
+  resize: none;
+  height: 16.63rem;
+  width: 50rem;
+  white-space: pre-wrap;
+  line-height: normal;
+  font-size: 12px;
+  font-family: "Courier New", "Monospaced", monospace;
+  color: #3c3c3c;
+  border: 1px #D3D3D3 solid;
+  border-radius: 0.4rem;
+}
+
+.pfm-input__button {
+  display: block;
+  margin: 1rem auto;
+  border: none;
+}
+
+#pfm-input__window--initial {
+  overflow-y: scroll;
+}
+
+#pfm-input__window--error {
+  height: fit-content;
+}
+
+#pfm-input__error-bar {
+  display: block;
+  margin: auto;
+  margin-bottom: -0.2em;
+  padding-bottom: 0.1em;
+  padding-left: 0.2em;
+  background-color: lightpink;
+  width: 50rem;
+  white-space: nowrap;
+  line-height: normal;
+  font-size: 18px;
+  font-family: "Courier New", "Monospaced", monospace;
+  color: #3c3c3c;
+  border: 1px #D3D3D3 solid;
+  border-radius: 0.4rem 0.4rem 0 0;
+}
